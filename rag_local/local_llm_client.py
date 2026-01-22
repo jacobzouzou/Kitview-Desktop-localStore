@@ -21,8 +21,8 @@ def call_ollama_llm_generate(prompt: str, model: str = "phi3:mini", temperature:
         }
 
     }
-    print("URL:", url)
-    print("Payload model:", payload["model"])
+    # print("URL:", url)
+    # print("Payload model:", payload["model"])
     r = requests.post(url, json=payload, timeout=120)
     r.raise_for_status()
     data = r.json()
