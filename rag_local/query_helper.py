@@ -152,12 +152,7 @@ def build_prompt(query: str, contexts: list, images: list) -> str:
         RÉPONSE:
         """
 
-def answer(query: str,top_k_text: int = 8, top_k_images: int = 4) -> Dict:
-    """
-    Version 'B' : prête pour RAG + LLM.
-    Aujourd’hui, elle renvoie un pack de contexte structuré.
-    Demain, vous ajoutez un champ final_text généré par un LLM.
-    """
+def answer(query: str,top_k_text: int =4, top_k_images: int = 1) -> Dict:
     text_hits = retrieve_text(query, top_k=top_k_text)
     image_hits = retrieve_images(query, top_k=top_k_images)
 
@@ -183,7 +178,14 @@ def answer(query: str,top_k_text: int = 8, top_k_images: int = 4) -> Dict:
             }
             for h in image_hits
         ],
-        "final_text": None  # placeholder : futur LLM
+        "prompt": None,
+        "llm": {
+        "answer": None,
+        "model": None,
+        "latency_ms": None,
+        "error": None
+        },
+        "status": "retrieved_only"
     }
 
 if __name__ == "__main__":

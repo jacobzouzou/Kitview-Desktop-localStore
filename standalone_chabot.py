@@ -37,7 +37,7 @@ KNOWLEDGE_FILES = []
 KB_DIR = "./knowledge_base/raw"
 _RERANKER = None
 _LOCK = Lock()
-
+LLM_MODEL = "phi3:mini"  # "llama3.1:8b", "qwen2.5", "gpt-4o-mini"
 def get_reranker():
     global _RERANKER
     with _LOCK:
@@ -329,7 +329,7 @@ class ChatbotWorker(QThread):
             from rag_local.query_helper import answer
 
             # 1) Retrieve large enough, then rerank/filter
-            query_response = answer(self.user_input, top_k_text=12, top_k_images=4)
+            query_response = answer(self.user_input, top_k_text=4, top_k_images=1)
 
             # 2) Rerank (AVANT filtrage final)
             try:
@@ -385,8 +385,8 @@ class ChatbotWorker(QThread):
             try:
                 # from rag_local.openai_client import call_llm
                 # final_answer = call_llm(prompt, model="gpt-4.1-mini")
-                from rag_local.local_llm_client import call_llm_local
-                final_answer = call_llm_local(prompt, model="mistral", temperature=0.2)
+                from rag_local.local_llm_client import call_ollama_llm_generate
+                final_answer = call_ollama_llm_generate(prompt, model=LLM_MODEL, temperature=0.2)
             except Exception as e:
                 final_answer = f"(Synthèse indisponible) {e}"
                 # 6) HTML propre

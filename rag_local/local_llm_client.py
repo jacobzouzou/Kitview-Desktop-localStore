@@ -5,7 +5,7 @@ import os, requests
 # ollama pull mistral (llama3.1:8b, qwen2.5, etc.) ou 
 # 
 # Ollama expose une API HTTP locale (par défaut http://127.0.0.1:11434).
-def call_llm_local(prompt: str, model: str = "llama3.1:8b", temperature: float = 0.2) -> str:
+def call_ollama_llm_generate(prompt: str, model: str = "phi3:mini", temperature: float = 0.2) -> str:
     url = "http://127.0.0.1:11434/api/generate"
     payload = {
         "model": model,
@@ -13,13 +13,38 @@ def call_llm_local(prompt: str, model: str = "llama3.1:8b", temperature: float =
         "stream": False,
         "options": {
             "temperature": temperature
+        },
+        "options": {
+            "temperature": 0.2,
+            "num_predict": 200,
+            "num_ctx": 2048
         }
+
     }
+    print("URL:", url)
+    print("Payload model:", payload["model"])
     r = requests.post(url, json=payload, timeout=120)
     r.raise_for_status()
     data = r.json()
     response=data.get("response", "").strip()
     return response
+import requests
+
+def call_ollama_llm_chat(query: str, context_block: str, model: str = "phi3:mini") -> str:
+    url = "http://127.0.0.1:11434/api/chat"
+    payload = {
+        "model": model,
+        "stream": False,
+        "messages": [
+            {"role": "system", "content": "Tu es un assistant expert. Réponds uniquement à partir du contexte fourni."},
+            {"role": "user", "content": f"QUESTION:\n{query}\n\nCONTEXTE:\n{context_block}"}
+        ],
+        "options": {"temperature": 0.2, "num_predict": 200, "num_ctx": 2048}
+    }
+    r = requests.post(url, json=payload, timeout=120)
+    r.raise_for_status()
+    data = r.json()
+    return data["message"]["content"].strip()
 
 # avec llama-server (fourni par llama.cpp), vous pouvez exposer une API compatible OpenAI.
 # build: ./llama-server -m ./models/model.gguf --port 8080
