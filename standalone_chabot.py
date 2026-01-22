@@ -25,6 +25,8 @@ from rag_local import index_helper
 from sentence_transformers import CrossEncoder
 from threading import Lock
 from dotenv import load_dotenv
+
+from rag_local.local_llm_client import call_ollama_llm_chat
 load_dotenv()
 
  
@@ -387,6 +389,7 @@ class ChatbotWorker(QThread):
                 # final_answer = call_llm(prompt, model="gpt-4.1-mini")
                 from rag_local.local_llm_client import call_ollama_llm_generate
                 final_answer = call_ollama_llm_generate(prompt, model=LLM_MODEL, temperature=0.2)
+                # final_answer = call_ollama_llm_chat(self.user_input, context_block=context, model=LLM_MODEL)
             except Exception as e:
                 final_answer = f"(Synthèse indisponible) {e}"
                 # 6) HTML propre
