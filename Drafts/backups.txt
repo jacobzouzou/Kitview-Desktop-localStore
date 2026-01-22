@@ -1,0 +1,93 @@
+from azure.storage.blob import BlobServiceClient, ContainerClient
+from azure.identity import ClientSecretCredential
+
+#
+def get_blob_service_client_v2():
+
+#     account = "orqual"
+#     container = "kitview"
+#     sas = "sp=rl&st=2026-01-13T16:23:32Z&se=2026-01-14T00:38:32Z&spr=https&sv=2024-11-04&sr=c&sig=bHvhHcyTTaaO5uZ3vB5Bq33RcJYSKDkEJPEvVMfhytY%3D"
+
+#     container_url=f"https://{account}.blob.core.windows.net/{container}?{sas}"
+#     container_client = ContainerClient.from_container_url(container_url)
+
+#     for blob in container_client.list_blobs():
+#         print(blob.name)
+
+# List file IDs by MIME types within a specific folder
+def list_file_ids_by_types_v3(folder_id: str, mime_types: list[str]) -> list[dict]:
+    """
+    Retourne la liste des fichiers d'un dossier Google Drive
+    filtrés par types MIME.
+    """
+    SCOPES = ["https://www.googleapis.com/auth/drive.readonly"]
+
+    flow = InstalledAppFlow.from_client_secrets_file("./config/client_secrets.json", SCOPES)
+    creds = flow.run_local_server(port=0)
+
+    service = build("drive", "v3", credentials=creds)
+
+    folder_id = "1GbEoxuQJLlQkyUTLrbDfU5pNP2_BX7Ia"
+    q = f"'{folder_id}' in parents and mimeType='application/pdf' and trashed=false"
+
+    resp = service.files().list(
+        q=q,
+        fields="files(id,name,mimeType)",
+        pageSize=1000,
+        supportsAllDrives=True,
+        includeItemsFromAllDrives=True
+    ).execute()
+
+    for f in resp.get("files", []):
+        print(f["name"])    
+
+
+def extract_file_id_from_url(url: str) -> str | None:
+    patterns = [
+        r"/file/d/([a-zA-Z0-9_-]+)",
+        r"id=([a-zA-Z0-9_-]+)"
+    ]
+    for p in patterns:
+        m = re.search(p, url)
+        if m:
+            return m.group(1)
+    return None
+
+# Find file ID by name within a specific folder
+def find_file_id_by_name_in_folder(file_name: str, folder_id: str) -> str | None:    
+    gauth = GoogleAuth()
+    gauth.LocalWebserverAuth()
+    drive = GoogleDrive(gauth)
+
+    q = (
+        f"title = '{file_name}' and "
+        f"'{folder_id}' in parents and "
+        f"trashed = false"
+    )
+    file_list = drive.ListFile({'q': q}).GetList()
+    return file_list[0]['id'] if file_list else None
+# Extract file ID from Google Drive URL
+def extract_file_id_from_url(url: str) -> str | None:
+    patterns = [
+        r"/file/d/([a-zA-Z0-9_-]+)",
+        r"id=([a-zA-Z0-9_-]+)"
+    ]
+    for p in patterns:
+        m = re.search(p, url)
+        if m:
+            return m.group(1)
+    return None
+# Find file ID by name within a specific folder
+def find_file_id_by_name_in_folder(file_name: str, folder_id: str) -> str | None:
+    gauth = GoogleAuth()
+    gauth.LocalWebserverAuth()
+    drive = GoogleDrive(gauth)
+
+    q = (
+        f"title = '{file_name}' and "
+        f"'{folder_id}' in parents and "
+        f"trashed = false"
+    )
+    file_list = drive.ListFile({'q': q}).GetList()
+    return file_list[0]['id'] if file_list else None
+

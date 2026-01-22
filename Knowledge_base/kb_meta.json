@@ -1,0 +1,9 @@
+{
+  "text_embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+  "image_embedding_model": "sentence-transformers/clip-ViT-B-32-multilingual-v1",
+  "text_dim": 384,
+  "image_dim": 512,
+  "text_vectors": 306,
+  "image_vectors": 389,
+  "updated_at": 1769077324
+}

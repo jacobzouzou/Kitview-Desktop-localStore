@@ -1,0 +1,12 @@
+# Secrets / tokens
+.env
+.env.*
+**/token.json
+**/credentials.json
+**/client_secrets.json
+**/*secret*.json
+**/*oauth*.json
+
+# Knowledge base large files
+Knowledge_base/raw/
+Knowledge_base/**/*.pdf
