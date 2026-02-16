@@ -1,4 +1,6 @@
+from pydoc import html
 import sys, os, csv,time,shutil,json,stat,docx,markdown
+import re
 import win32com.client
 
 from PyQt5 import QtGui
@@ -90,8 +92,6 @@ def get_kb_files(directory):
 
     return files
 
-
-
 def wait_for_files_to_be_ready(file_ids):
     """Waits until all uploaded files are processed before attaching them."""
     print("Waiting for files to be processed...")
@@ -146,6 +146,79 @@ def load_Kb_files(selected_folder):
     if files_ids and len(files_ids) > 0:
         wait_for_files_to_be_ready(files_ids)
     return files_ids 
+
+def clean_citations(text: str) -> str:
+    if not text:
+        return text
+    text = re.sub(r"【[^】]*】", "", text)
+    text = re.sub(r"\s{2,}", " ", text).strip()
+    return text
+
+def render_light_md_to_html(text: str) -> str:
+    """
+    Rend un sous-ensemble Markdown (## titres, listes -/*, paragraphes) en HTML.
+    Safe: on échappe d'abord, puis on structure.
+    """
+    if not text:
+        return ""
+
+    lines = text.splitlines()
+    out = []
+    in_ul = False
+    in_p = False
+
+    def close_ul():
+        nonlocal in_ul
+        if in_ul:
+            out.append("</ul>")
+            in_ul = False
+
+    def close_p():
+        nonlocal in_p
+        if in_p:
+            out.append("</p>")
+            in_p = False
+
+    for raw in lines:
+        line = raw.rstrip()
+
+        # Ligne vide => fermeture des blocs en cours
+        if not line.strip():
+            close_ul()
+            close_p()
+            continue
+
+        # Titres "## "
+        if line.lstrip().startswith("## "):
+            close_ul()
+            close_p()
+            title = line.lstrip()[3:].strip()
+            out.append(f"<h2 style='margin:10px 0 6px;'>{title}</h2>")
+            continue
+
+        # Puces "- " ou "* "
+        stripped = line.lstrip()
+        if stripped.startswith("- ") or stripped.startswith("* "):
+            close_p()
+            if not in_ul:
+                out.append("<ul style='margin:6px 0 10px 18px;'>")  
+                in_ul = True
+            item = stripped[2:].strip()
+            out.append(f"<li style='margin:2px 0;'>{item}</li>")
+            continue
+
+        # Texte normal => paragraphe
+        close_ul()
+        if not in_p:
+            out.append("<p style='margin:6px 0; line-height:1.45;'>")
+            in_p = True
+
+        # Conserver les retours ligne "soft" dans le paragraphe
+        out.append(line + "<br>")
+
+    close_ul()
+    close_p()
+    return "".join(out)
 
 class KbFileProcessingThread(QThread):
     processing_done = pyqtSignal(list)
@@ -210,7 +283,7 @@ class ChatbotApp(QWidget):
         self.clear_button.setIcon(QIcon(clear_icon))
         self.clear_button.setIconSize(QSize(30,30))  # Ajuste la taille de l'icône
         self.clear_button.setFixedSize(52, 52)  # Ajuste la taille du bouton
-        self.clear_button.clicked.connect(self.clear_conversation)
+        self.clear_button.clicked.connect(self.reset_conversation)
         input_layout.addWidget(self.clear_button)
 
         self.button_layout = QHBoxLayout()
@@ -281,7 +354,7 @@ class ChatbotApp(QWidget):
         user_message = self.input_text.text().strip()
         
         if user_message:
-            self.chat_display.append(f"<p style='font-size: 20px;'>👤</p> <p style='font-size: 15px;'> {user_message}</p>")
+            self.chat_display.append(f"<p style='font-size: 20px; color: black;'>👤</p> <p style='font-size: 15px;'> {user_message}</p>")
             self.chat_display.append("")
             self.history.append(user_message)
             self.history_index = len(self.history)
@@ -291,8 +364,9 @@ class ChatbotApp(QWidget):
             
             self.worker = ChatbotWorker(user_message, self.application_name, self.files_ids)
             self.worker.response_ready.connect(self.display_response)
-            self.worker.start()
-            
+            self.worker.start()       
+
+   
     def display_response(self, bot_reply_html):
         self.spinner.stop()
         self.loading_label.hide()
@@ -301,14 +375,15 @@ class ChatbotApp(QWidget):
         self.chat_display.setOpenExternalLinks(True)
 
         # Remplacement des balises <p> par <span> pour éviter les sauts de ligne excessifs
-        bot_reply_html = bot_reply_html.replace("<p", "<span ").replace("</p>", "</span>").replace("30", "15")
-
+        bot_reply_html = render_light_md_to_html(bot_reply_html)
+        bot_reply_html = bot_reply_html.replace("<p", "<span ").replace("</p>", "</span>").replace("\n", "<br>").replace("30", "15")
         # Ajouter le nouveau contenu à la fin du body
         self.chat_display.moveCursor(QtGui.QTextCursor.End)  # Place le curseur à la fin
         self.chat_display.insertHtml(f"<br>{BOT_AVATAR}<br>{bot_reply_html}<br>")  # Ajoute le nouveau message
 
-    def clear_conversation(self):
-        self.chat_display.setHtml(f"{BOT_AVATAR} <p style='font-size:15px;'>{GREETING_MESSAGE}</p>")
+    def reset_conversation(self):
+        self.chat_display.setHtml(f"{BOT_AVATAR} <p style='font-size:15px;'>{GREETING_MESSAGE}</p>")      
+
         
     def get_icon(self, app_name):
         # Dictionnaire des icônes en fonction du nom de l'application
@@ -384,7 +459,8 @@ class ChatbotWorker(QThread):
 
             messages = OPENAI_CLIENT.beta.threads.messages.list(thread_id=thread.id)
             bot_reply = messages.data[0].content[0].text.value
-
+            bot_reply = clean_citations(bot_reply)
+             # Convertir le texte Markdown en HTML
             html = markdown.markdown(bot_reply, output_format='html5')
             html = html.replace('<a ', '<a target="_blank" ')
             bot_reply_html = f"<p style='font-size: 15px'>{html}</p>"

@@ -1,10 +1,11 @@
 # rag_local/llm_router.py
-import os, requests
+import requests
 
 # install ollama: service windows sur http://localhost:11434
 # ollama pull mistral (llama3.1:8b, qwen2.5, etc.) ou 
 # 
 # Ollama expose une API HTTP locale (par défaut http://127.0.0.1:11434).
+# One shot task with /api/generate
 def call_ollama_llm_generate(prompt: str, model: str = "phi3:mini", temperature: float = 0.2) -> str:
     url = "http://127.0.0.1:11434/api/generate"
     payload = {
@@ -12,14 +13,10 @@ def call_ollama_llm_generate(prompt: str, model: str = "phi3:mini", temperature:
         "prompt": prompt,
         "stream": False,
         "options": {
-            "temperature": temperature
-        },
-        "options": {
-            "temperature": 0.2,
+            "temperature": temperature,
             "num_predict": 200,
             "num_ctx": 2048
-        }
-
+        },
     }
     # print("URL:", url)
     # print("Payload model:", payload["model"])
@@ -28,7 +25,7 @@ def call_ollama_llm_generate(prompt: str, model: str = "phi3:mini", temperature:
     data = r.json()
     response=data.get("response", "").strip()
     return response
-import requests
+
 
 def call_ollama_llm_chat(query: str, context_block: str, model: str = "phi3:mini") -> str:
     url = "http://127.0.0.1:11434/api/chat"

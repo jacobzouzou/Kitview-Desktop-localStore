@@ -57,8 +57,8 @@ def download_knowledge_files_from_azure(container_name="kitview", dest_dir: str 
 
     print(f"[DONE] Downloaded={downloaded} | Skipped={skipped}")
   
-# def main():
-#     download_container_to_knowledge_base_skip_existing()
+def main():
+    download_knowledge_files_from_azure()
 
-# if __name__ == "__main__":
-#     main()
+if __name__ == "__main__":
+    main()
