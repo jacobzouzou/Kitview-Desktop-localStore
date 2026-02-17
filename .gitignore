@@ -10,3 +10,6 @@
 # Knowledge base large files
 Knowledge_base/raw/
 Knowledge_base/**/*.pdf
+dist/*
+cloud_chatabot.spec
+build/*

@@ -123,12 +123,18 @@ Crée un thread OpenAI avec fichiers attachés.
 
 ### Création d'un exécutable
 ```bash
-pyinstaller --onefile --windowed cloud_chabot.py
+pyinstaller --onefile --windowed cloud_chatbot.py
+or
+pyinstaller --onedir --windowed --hidden-import=pydrive cloud_chatbot.py
+pyinstaller --onedir --windowed --hidden-import=pydrive --hidden-import=pydrive.auth --hidden-import=pydrive.drive --collect-all=pydrive cloud_chatbot.py
 ```
 
 ### Options avancées
 ```bash
-pyinstaller --onefile --windowed --icon=assets/kitview.ico --add-data "assets;assets" --add-data "config;config" cloud_chabot.py
+pyinstaller --onefile --windowed --icon=assets/kitview.ico --add-data "assets;assets" --add-data "config;config" cloud_chatbot.py
+or
+pyinstaller --onedir --windowed --icon-assets/kitview.ico --add-data "assets;assets" main.py
+
 ```
 
 ## 🐛 Dépannage

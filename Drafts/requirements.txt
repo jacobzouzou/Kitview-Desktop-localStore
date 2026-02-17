@@ -9,12 +9,11 @@ faiss-cpu
 langchain-hub
 azure-storage-blob
 azure-identity
-pydrive.auth
-pydrive.drive
+PyDrive
 pandas
 langchain-community
-google_auth_oauthlib.flow
-googleapiclient.discovery 
+google-auth-oauthlib
+google-api-python-client
 pywin32
 PyQt5
 python-pptx

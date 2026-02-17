@@ -1,19 +1,18 @@
 from pydoc import html
-import sys, os, csv,time,shutil,json,stat,docx,markdown
-import re
-import win32com.client
+import sys, os,time,json,markdown, re
+
+# Force PyInstaller to include these modules
+import pydrive.auth
+import pydrive.drive
+import oauth2client
+import googleapiclient.discovery
 
 from PyQt5 import QtGui
 from PyQt5.QtCore import Qt, QThread, pyqtSignal, QSize
 from PyQt5.QtGui import QMovie, QIcon, QPixmap
 from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout,QLineEdit, QPushButton, QLabel, QHBoxLayout, QFileDialog, QTextBrowser
 
-from PyPDF2 import PdfMerger
-from pptx import Presentation
-from bs4 import BeautifulSoup 
-
 import openai
-import pandas as pd
 
 # get  api key from .env file
 from Helpers.google import download_knowledge_files_from_googleDrive

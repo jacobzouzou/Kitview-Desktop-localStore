@@ -2,6 +2,9 @@
 ## Compile insttructions
 instutions de compilation: 
 pyinstaller --onefile --windowed winChatBot.py
+or
+pyinstaller --onedir --windowed main.py
+
 
 ## Install local RAG
 pip install faiss-cpu sentence-transformers numpy

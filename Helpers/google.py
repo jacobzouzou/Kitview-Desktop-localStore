@@ -1,8 +1,6 @@
 from pydrive.auth import GoogleAuth
 from pydrive.drive import GoogleDrive
 import os, re
-import pandas as pd
-from io import StringIO
 import logging  
 # v3
 from google_auth_oauthlib.flow import InstalledAppFlow
