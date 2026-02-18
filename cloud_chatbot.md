@@ -122,20 +122,28 @@ Crée un thread OpenAI avec fichiers attachés.
 ## 🔧 Compilation
 
 ### Création d'un exécutable
+
+**Important:** The code has been updated to properly handle bundled assets. Use one of these commands:
+
+#### Option 1: Single File Executable (Recommended)
 ```bash
-pyinstaller --onefile --windowed cloud_chatbot.py
-or
-pyinstaller --onedir --windowed --hidden-import=pydrive cloud_chatbot.py
-pyinstaller --onedir --windowed --hidden-import=pydrive --hidden-import=pydrive.auth --hidden-import=pydrive.drive --collect-all=pydrive cloud_chatbot.py
+pyinstaller --onefile --windowed --icon=assets/kitview_icon.png --add-data "assets;assets" --add-data "config;config" cloud_chatbot.py
 ```
 
-### Options avancées
+#### Option 2: Directory Bundle (Faster build, larger output)
 ```bash
-pyinstaller --onefile --windowed --icon=assets/kitview.ico --add-data "assets;assets" --add-data "config;config" cloud_chatbot.py
+pyinstaller --onefile --windowed --icon=assets/kitview_icon.png --add-data "assets;assets" --add-data "config;config" cloud_chatbot.py
 or
-pyinstaller --onedir --windowed --icon-assets/kitview.ico --add-data "assets;assets" main.py
-
+pyinstaller --onedir --windowed --icon=assets/kitview_icon.png --add-data "assets;assets" --add-data "config;config" --hidden-import=pydrive --hidden-import=pydrive.auth --hidden-import=pydrive.drive --collect-all=pydrive cloud_chatbot.py
 ```
+
+### Asset Path Resolution
+
+The code now automatically detects whether it's running as a:
+- **PyInstaller Bundle**: Uses `sys._MEIPASS` to locate assets in the bundle
+- **Development Mode**: Uses the script directory
+
+All asset references have been updated to use the `get_asset_path()` function, ensuring images and icons work in both modes.
 
 ## 🐛 Dépannage
 

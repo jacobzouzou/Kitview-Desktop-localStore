@@ -14,6 +14,17 @@ from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout,QLineEdit, QPushB
 
 import openai
 
+# Helper function to get correct asset paths for PyInstaller bundled apps
+def get_asset_path(asset_name):
+    """Get the correct path to an asset, whether running as PyInstaller bundle or dev mode."""
+    if hasattr(sys, '_MEIPASS'):
+        # Running as PyInstaller bundle
+        base_path = sys._MEIPASS
+    else:
+        # Running in development mode
+        base_path = os.path.dirname(os.path.abspath(__file__))
+    return os.path.join(base_path, 'assets', asset_name)
+
 # get  api key from .env file
 from Helpers.google import download_knowledge_files_from_googleDrive
 from Helpers.azure import download_knowledge_files_from_azure
@@ -32,7 +43,6 @@ APPLICATION_NAME = "kitview"
 
 # Récupérer une valeur spécifique
 GREETING_MESSAGE = "Bonjour, je suis Kity votre assistant. Comment puis-je vous aider aujourd'hui ?"
-BOT_AVATAR = "<img src='./assets/chatbot.png' width='30' height='30'>"
 
 def normalize_path(path):
     if sys.platform == "win32":
@@ -236,6 +246,10 @@ class ChatbotApp(QWidget):
         self.files_ids = files_ids
         self.application_name = application_name    
         
+        # Set BOT_AVATAR with correct asset path
+        chatbot_img_path = get_asset_path("chatbot.png").replace("\\", "/")
+        self.bot_avatar = f"<img src='file:///{chatbot_img_path}' width='30' height='30'>"
+        
         self.setWindowTitle(f"Assistant IA - {application_name[:1].upper()}{application_name[1:]}")
         self.setGeometry(150, 150, 600, 800)
         self.setWindowIcon(self.get_icon(application_name))
@@ -244,11 +258,11 @@ class ChatbotApp(QWidget):
 
         self.chat_display = QTextBrowser(self)
         self.chat_display.setReadOnly(True)
-        self.chat_display.setHtml(f"{BOT_AVATAR}<p style='font-size:15px;'>{GREETING_MESSAGE}</p>")
+        self.chat_display.setHtml(f"{self.bot_avatar}<p style='font-size:15px;'>{GREETING_MESSAGE}</p>")
         self.layout.addWidget(self.chat_display)
 
         self.loading_label = QLabel(self)
-        self.spinner = QMovie("./assets/typing.gif")
+        self.spinner = QMovie(get_asset_path("typing.gif"))
         self.spinner.setScaledSize(QSize(75, 50))
         self.spinner.backgroundColor = Qt.transparent
         self.loading_label.setMovie(self.spinner)   
@@ -260,7 +274,7 @@ class ChatbotApp(QWidget):
         
         self.button_layout = QHBoxLayout()
         self.select_folder_button = QPushButton(self)
-        dir_icon = QPixmap("./assets/dir_icon.png")  # Image du bouton
+        dir_icon = QPixmap(get_asset_path("dir_icon.png"))  # Image du bouton
         self.select_folder_button.setIcon(QIcon(dir_icon))
         self.select_folder_button.setIconSize(QSize(30, 30))  # Ajuste la taille de l'icône
         self.select_folder_button.setFixedSize(52, 52)  # Ajuste la taille du bouton
@@ -278,7 +292,7 @@ class ChatbotApp(QWidget):
         
         self.button_layout = QHBoxLayout()
         self.clear_button = QPushButton(self)
-        clear_icon = QPixmap("./assets/reset.png")  # Image du bouton
+        clear_icon = QPixmap(get_asset_path("reset.png"))  # Image du bouton
         self.clear_button.setIcon(QIcon(clear_icon))
         self.clear_button.setIconSize(QSize(30,30))  # Ajuste la taille de l'icône
         self.clear_button.setFixedSize(52, 52)  # Ajuste la taille du bouton
@@ -287,7 +301,7 @@ class ChatbotApp(QWidget):
 
         self.button_layout = QHBoxLayout()
         self.send_button = QPushButton(self)
-        send_icon = QPixmap("./assets/send.png")  # Image du bouton
+        send_icon = QPixmap(get_asset_path("send.png"))  # Image du bouton
         self.send_button.setIcon(QIcon(send_icon))
         self.send_button.setIconSize(QSize(30, 30))  # Ajuste la taille de l'icône
         self.send_button.setFixedSize(52, 52)  # Ajuste la taille du bouton        
@@ -378,25 +392,25 @@ class ChatbotApp(QWidget):
         bot_reply_html = bot_reply_html.replace("<p", "<span ").replace("</p>", "</span>").replace("\n", "<br>").replace("30", "15")
         # Ajouter le nouveau contenu à la fin du body
         self.chat_display.moveCursor(QtGui.QTextCursor.End)  # Place le curseur à la fin
-        self.chat_display.insertHtml(f"<br>{BOT_AVATAR}<br>{bot_reply_html}<br>")  # Ajoute le nouveau message
+        self.chat_display.insertHtml(f"<br>{self.bot_avatar}<br>{bot_reply_html}<br>")  # Ajoute le nouveau message
 
     def reset_conversation(self):
-        self.chat_display.setHtml(f"{BOT_AVATAR} <p style='font-size:15px;'>{GREETING_MESSAGE}</p>")      
+        self.chat_display.setHtml(f"{self.bot_avatar} <p style='font-size:15px;'>{GREETING_MESSAGE}</p>")      
 
         
     def get_icon(self, app_name):
         # Dictionnaire des icônes en fonction du nom de l'application
         icons = {
-            "orqual": "./assets/orqual-removebg-preview.png",    
-            "orthalis": "./assets/Orthalis-new.png",
-            "dentalis": "./assets/Dentalis.png",
-            "dentapoche": "./assets/Dentapoche.png",
-            "kitview": "./assets/KitView.png",
-            "ceph":"./assets/ceph.png",
+            "orqual": get_asset_path("orqual-removebg-preview.png"),    
+            "orthalis": get_asset_path("Orthalis-new.png"),
+            "dentalis": get_asset_path("Dentalis.png"),
+            "dentapoche": get_asset_path("Dentapoche.png"),
+            "kitview": get_asset_path("KitView.png"),
+            "ceph": get_asset_path("ceph.png"),
         }
 
         # Récupérer le chemin de l'icône ou une icône par défaut
-        icon_path = icons.get(app_name.lower(), "./assets/orqual.png")
+        icon_path = icons.get(app_name.lower(), get_asset_path("orqual.png"))
 
         # Vérifier si le fichier existe avant de le charger
         if not os.path.exists(icon_path):
