@@ -11,5 +11,26 @@
 Knowledge_base/raw/
 Knowledge_base/**/*.pdf
 dist/*
+dist_fixed/
+dist_cloud_fixed/
 cloud_chatabot.spec
 build/*
+
+# PyInstaller builds
+dist/
+build/
+*.exe
+*.spec.~*
+
+# Dépendances générées
+_internal/
+*.pyc
+__pycache__/
+
+# .env local (secrets)
+.env
+.env.local
+
+# Venv
+env313/
+venv/

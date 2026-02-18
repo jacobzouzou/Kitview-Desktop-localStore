@@ -21,7 +21,8 @@ def _safe_rel_path(blob_name: str) -> Path:
 def download_knowledge_files_from_azure(container_name="kitview", dest_dir: str = "./Knowledge_base"):
     connection_string = os.getenv("AZURE_STORAGE_CONNECTION_STRING")
     if not connection_string:
-        raise ValueError("AZURE_STORAGE_CONNECTION_STRING manquant dans les variables d’environnement.")
+        raise ValueError("AZURE_STORAGE_CONNECTION_STRING manquant dans les variables d'environnement. "
+                         "Ajoutez cette variable dans votre fichier .env pour activer la synchronisation Azure.")
 
     dest_path = Path(dest_dir).resolve()
     dest_path.mkdir(parents=True, exist_ok=True)

@@ -1,9 +1,9 @@
 # README
 ## Compile insttructions
 instutions de compilation: 
-pyinstaller --onefile --windowed winChatBot.py
+pyinstaller --onefile --windowed yourPyFile.py
 or
-pyinstaller --onedir --windowed main.py
+pyinstaller --onedir --windowed yourPyFile.py
 
 
 ## Install local RAG

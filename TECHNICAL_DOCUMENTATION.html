@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+    <html><head>
+      <title>TECHNICAL_DOCUMENTATION</title>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      
+      <link rel="stylesheet" href="file:///c:\Users\Jacob\.vscode\extensions\shd101wyy.markdown-preview-enhanced-0.8.20\crossnote\dependencies\katex\katex.min.css">
+      
+      
+      
+      
+      
+      <style>
+      code[class*=language-],pre[class*=language-]{color:#333;background:0 0;font-family:Consolas,"Liberation Mono",Menlo,Courier,monospace;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;word-wrap:normal;line-height:1.4;-moz-tab-size:8;-o-tab-size:8;tab-size:8;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none}pre[class*=language-]{padding:.8em;overflow:auto;border-radius:3px;background:#f5f5f5}:not(pre)>code[class*=language-]{padding:.1em;border-radius:.3em;white-space:normal;background:#f5f5f5}.token.blockquote,.token.comment{color:#969896}.token.cdata{color:#183691}.token.doctype,.token.macro.property,.token.punctuation,.token.variable{color:#333}.token.builtin,.token.important,.token.keyword,.token.operator,.token.rule{color:#a71d5d}.token.attr-value,.token.regex,.token.string,.token.url{color:#183691}.token.atrule,.token.boolean,.token.code,.token.command,.token.constant,.token.entity,.token.number,.token.property,.token.symbol{color:#0086b3}.token.prolog,.token.selector,.token.tag{color:#63a35c}.token.attr-name,.token.class,.token.class-name,.token.function,.token.id,.token.namespace,.token.pseudo-class,.token.pseudo-element,.token.url-reference .token.variable{color:#795da3}.token.entity{cursor:help}.token.title,.token.title .token.punctuation{font-weight:700;color:#1d3e81}.token.list{color:#ed6a43}.token.inserted{background-color:#eaffea;color:#55a532}.token.deleted{background-color:#ffecec;color:#bd2c00}.token.bold{font-weight:700}.token.italic{font-style:italic}.language-json .token.property{color:#183691}.language-markup .token.tag .token.punctuation{color:#333}.language-css .token.function,code.language-css{color:#0086b3}.language-yaml .token.atrule{color:#63a35c}code.language-yaml{color:#183691}.language-ruby .token.function{color:#333}.language-markdown .token.url{color:#795da3}.language-makefile .token.symbol{color:#795da3}.language-makefile .token.variable{color:#183691}.language-makefile .token.builtin{color:#0086b3}.language-bash .token.keyword{color:#0086b3}pre[data-line]{position:relative;padding:1em 0 1em 3em}pre[data-line] .line-highlight-wrapper{position:absolute;top:0;left:0;background-color:transparent;display:block;width:100%}pre[data-line] .line-highlight{position:absolute;left:0;right:0;padding:inherit 0;margin-top:1em;background:hsla(24,20%,50%,.08);background:linear-gradient(to right,hsla(24,20%,50%,.1) 70%,hsla(24,20%,50%,0));pointer-events:none;line-height:inherit;white-space:pre}pre[data-line] .line-highlight:before,pre[data-line] .line-highlight[data-end]:after{content:attr(data-start);position:absolute;top:.4em;left:.6em;min-width:1em;padding:0 .5em;background-color:hsla(24,20%,50%,.4);color:#f4f1ef;font:bold 65%/1.5 sans-serif;text-align:center;vertical-align:.3em;border-radius:999px;text-shadow:none;box-shadow:0 1px #fff}pre[data-line] .line-highlight[data-end]:after{content:attr(data-end);top:auto;bottom:.4em}html body{font-family:'Helvetica Neue',Helvetica,'Segoe UI',Arial,freesans,sans-serif;font-size:16px;line-height:1.6;color:#333;background-color:#fff;overflow:initial;box-sizing:border-box;word-wrap:break-word}html body>:first-child{margin-top:0}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{line-height:1.2;margin-top:1em;margin-bottom:16px;color:#000}html body h1{font-size:2.25em;font-weight:300;padding-bottom:.3em}html body h2{font-size:1.75em;font-weight:400;padding-bottom:.3em}html body h3{font-size:1.5em;font-weight:500}html body h4{font-size:1.25em;font-weight:600}html body h5{font-size:1.1em;font-weight:600}html body h6{font-size:1em;font-weight:600}html body h1,html body h2,html body h3,html body h4,html body h5{font-weight:600}html body h5{font-size:1em}html body h6{color:#5c5c5c}html body strong{color:#000}html body del{color:#5c5c5c}html body a:not([href]){color:inherit;text-decoration:none}html body a{color:#08c;text-decoration:none}html body a:hover{color:#00a3f5;text-decoration:none}html body img{max-width:100%}html body>p{margin-top:0;margin-bottom:16px;word-wrap:break-word}html body>ol,html body>ul{margin-bottom:16px}html body ol,html body ul{padding-left:2em}html body ol.no-list,html body ul.no-list{padding:0;list-style-type:none}html body ol ol,html body ol ul,html body ul ol,html body ul ul{margin-top:0;margin-bottom:0}html body li{margin-bottom:0}html body li.task-list-item{list-style:none}html body li>p{margin-top:0;margin-bottom:0}html body .task-list-item-checkbox{margin:0 .2em .25em -1.8em;vertical-align:middle}html body .task-list-item-checkbox:hover{cursor:pointer}html body blockquote{margin:16px 0;font-size:inherit;padding:0 15px;color:#5c5c5c;background-color:#f0f0f0;border-left:4px solid #d6d6d6}html body blockquote>:first-child{margin-top:0}html body blockquote>:last-child{margin-bottom:0}html body hr{height:4px;margin:32px 0;background-color:#d6d6d6;border:0 none}html body table{margin:10px 0 15px 0;border-collapse:collapse;border-spacing:0;display:block;width:100%;overflow:auto;word-break:normal;word-break:keep-all}html body table th{font-weight:700;color:#000}html body table td,html body table th{border:1px solid #d6d6d6;padding:6px 13px}html body dl{padding:0}html body dl dt{padding:0;margin-top:16px;font-size:1em;font-style:italic;font-weight:700}html body dl dd{padding:0 16px;margin-bottom:16px}html body code{font-family:Menlo,Monaco,Consolas,'Courier New',monospace;font-size:.85em;color:#000;background-color:#f0f0f0;border-radius:3px;padding:.2em 0}html body code::after,html body code::before{letter-spacing:-.2em;content:'\00a0'}html body pre>code{padding:0;margin:0;word-break:normal;white-space:pre;background:0 0;border:0}html body .highlight{margin-bottom:16px}html body .highlight pre,html body pre{padding:1em;overflow:auto;line-height:1.45;border:#d6d6d6;border-radius:3px}html body .highlight pre{margin-bottom:0;word-break:normal}html body pre code,html body pre tt{display:inline;max-width:initial;padding:0;margin:0;overflow:initial;line-height:inherit;word-wrap:normal;background-color:transparent;border:0}html body pre code:after,html body pre code:before,html body pre tt:after,html body pre tt:before{content:normal}html body blockquote,html body dl,html body ol,html body p,html body pre,html body ul{margin-top:0;margin-bottom:16px}html body kbd{color:#000;border:1px solid #d6d6d6;border-bottom:2px solid #c7c7c7;padding:2px 4px;background-color:#f0f0f0;border-radius:3px}@media print{html body{background-color:#fff}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{color:#000;page-break-after:avoid}html body blockquote{color:#5c5c5c}html body pre{page-break-inside:avoid}html body table{display:table}html body img{display:block;max-width:100%;max-height:100%}html body code,html body pre{word-wrap:break-word;white-space:pre}}.markdown-preview{width:100%;height:100%;box-sizing:border-box}.markdown-preview ul{list-style:disc}.markdown-preview ul ul{list-style:circle}.markdown-preview ul ul ul{list-style:square}.markdown-preview ol{list-style:decimal}.markdown-preview ol ol,.markdown-preview ul ol{list-style-type:lower-roman}.markdown-preview ol ol ol,.markdown-preview ol ul ol,.markdown-preview ul ol ol,.markdown-preview ul ul ol{list-style-type:lower-alpha}.markdown-preview .newpage,.markdown-preview .pagebreak{page-break-before:always}.markdown-preview pre.line-numbers{position:relative;padding-left:3.8em;counter-reset:linenumber}.markdown-preview pre.line-numbers>code{position:relative}.markdown-preview pre.line-numbers .line-numbers-rows{position:absolute;pointer-events:none;top:1em;font-size:100%;left:0;width:3em;letter-spacing:-1px;border-right:1px solid #999;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.markdown-preview pre.line-numbers .line-numbers-rows>span{pointer-events:none;display:block;counter-increment:linenumber}.markdown-preview pre.line-numbers .line-numbers-rows>span:before{content:counter(linenumber);color:#999;display:block;padding-right:.8em;text-align:right}.markdown-preview .mathjax-exps .MathJax_Display{text-align:center!important}.markdown-preview:not([data-for=preview]) .code-chunk .code-chunk-btn-group{display:none}.markdown-preview:not([data-for=preview]) .code-chunk .status{display:none}.markdown-preview:not([data-for=preview]) .code-chunk .output-div{margin-bottom:16px}.markdown-preview .md-toc{padding:0}.markdown-preview .md-toc .md-toc-link-wrapper .md-toc-link{display:inline;padding:.25rem 0}.markdown-preview .md-toc .md-toc-link-wrapper .md-toc-link div,.markdown-preview .md-toc .md-toc-link-wrapper .md-toc-link p{display:inline}.markdown-preview .md-toc .md-toc-link-wrapper.highlighted .md-toc-link{font-weight:800}.scrollbar-style::-webkit-scrollbar{width:8px}.scrollbar-style::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}.scrollbar-style::-webkit-scrollbar-thumb{border-radius:5px;background-color:rgba(150,150,150,.66);border:4px solid rgba(150,150,150,.66);background-clip:content-box}html body[for=html-export]:not([data-presentation-mode]){position:relative;width:100%;height:100%;top:0;left:0;margin:0;padding:0;overflow:auto}html body[for=html-export]:not([data-presentation-mode]) .markdown-preview{position:relative;top:0;min-height:100vh}@media screen and (min-width:914px){html body[for=html-export]:not([data-presentation-mode]) .markdown-preview{padding:2em calc(50% - 457px + 2em)}}@media screen and (max-width:914px){html body[for=html-export]:not([data-presentation-mode]) .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for=html-export]:not([data-presentation-mode]) .markdown-preview{font-size:14px!important;padding:1em}}@media print{html body[for=html-export]:not([data-presentation-mode]) #sidebar-toc-btn{display:none}}html body[for=html-export]:not([data-presentation-mode]) #sidebar-toc-btn{position:fixed;bottom:8px;left:8px;font-size:28px;cursor:pointer;color:inherit;z-index:99;width:32px;text-align:center;opacity:.4}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] #sidebar-toc-btn{opacity:1}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc{position:fixed;top:0;left:0;width:300px;height:100%;padding:32px 0 48px 0;font-size:14px;box-shadow:0 0 4px rgba(150,150,150,.33);box-sizing:border-box;overflow:auto;background-color:inherit}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar{width:8px}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-thumb{border-radius:5px;background-color:rgba(150,150,150,.66);border:4px solid rgba(150,150,150,.66);background-clip:content-box}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc a{text-decoration:none}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc{padding:0 16px}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper .md-toc-link{display:inline;padding:.25rem 0}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper .md-toc-link div,html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper .md-toc-link p{display:inline}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper.highlighted .md-toc-link{font-weight:800}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{left:300px;width:calc(100% - 300px);padding:2em calc(50% - 457px - 300px / 2);margin:0;box-sizing:border-box}@media screen and (max-width:1274px){html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{width:100%}}html body[for=html-export]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .markdown-preview{left:50%;transform:translateX(-50%)}html body[for=html-export]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .md-sidebar-toc{display:none}
+/* Please visit the URL below for more information: */
+/*   https://shd101wyy.github.io/markdown-preview-enhanced/#/customize-css */
+
+      </style>
+      <!-- The content below will be included at the end of the <head> element. --><script type="text/javascript">
+  document.addEventListener("DOMContentLoaded", function () {
+    // your code here
+  });
+</script></head><body for="html-export">
+    
+    
+      <div class="crossnote markdown-preview  ">
+      
+<h1 id="kitview-desktop-chatbot---documentation-technique-complète">Kitview Desktop Chatbot - Documentation Technique Complète </h1>
+<h2 id="table-des-matières">Table des matières </h2>
+<ol>
+<li><a href="#vue-densemble-architecturale">Vue d'ensemble architecturale</a></li>
+<li><a href="#architecture-du-syst%C3%A8me">Architecture du système</a></li>
+<li><a href="#api-et-fonctions-principales">API et fonctions principales</a></li>
+<li><a href="#int%C3%A9grations-cloud">Intégrations cloud</a></li>
+<li><a href="#syst%C3%A8me-rag-local">Système RAG local</a></li>
+<li><a href="#configuration">Configuration</a></li>
+<li><a href="#d%C3%A9ploiement-et-compilation">Déploiement et compilation</a></li>
+<li><a href="#d%C3%A9pannage">Dépannage</a></li>
+</ol>
+<hr>
+<h2 id="vue-densemble-architecturale">Vue d'ensemble architecturale </h2>
+<h3 id="description-générale">Description générale </h3>
+<p>Kitview est une application chatbot intelligent multi-mode offrant deux architectures :</p>
+<ol>
+<li><strong>Cloud Mode</strong> (<code>cloud_chatbot.py</code>): Utilise OpenAI API avec Vector Store intégré</li>
+<li><strong>Local RAG Mode</strong> (<code>standalone_chabot.py</code>): Utilise un système RAG local avec Ollama/LLMs locaux</li>
+</ol>
+<h3 id="modes-de-fonctionnement">Modes de fonctionnement </h3>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>┌─────────────────────────────────────────────────────────────┐
+│                  Kitview Chatbot System                     │
+├──────────────────────┬──────────────────────────────────────┤
+│   CLOUD MODE         │        LOCAL RAG MODE                │
+│ (cloud_chatbot.py)   │   (standalone_chabot.py)             │
+├──────────────────────┼──────────────────────────────────────┤
+│ • OpenAI API         │ • Ollama/Local LLM                   │
+│ • Vector Store       │ • FAISS Indexes (text + image)       │
+│ • Threading          │ • SQLite Metadata                    │
+│ • File Upload        │ • Sentence Transformers              │
+│                      │ • CrossEncoder Reranker              │
+│                      │ • Multi-modal retrieval              │
+└──────────────────────┴──────────────────────────────────────┘
+</code></pre><hr>
+<h2 id="architecture-du-système">Architecture du système </h2>
+<h3 id="composants-principaux">Composants principaux </h3>
+<h4 id="1-couche-interface-utilisateur-pyqt5">1. <strong>Couche Interface Utilisateur (PyQt5)</strong> </h4>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>ChatbotApp (QWidget)
+├── chat_display (QTextBrowser)
+│   └── Affiche les messages et images en HTML
+├── input_text (QLineEdit)
+│   └── Saisie utilisateur avec historique (↑/↓)
+├── select_folder_button (QPushButton)
+│   └── Navigation et upload de dossiers
+├── send_button, clear_button (QPushButton)
+│   └── Actions d'envoi et de réinitialisation
+└── loading_label (QLabel + QMovie)
+    └── Animation de chargement
+</code></pre><h4 id="2-couche-métier-globale">2. <strong>Couche métier globale</strong> </h4>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>├── Helpers/
+│   ├── google.py          # Intégration Google Drive
+│   ├── azure.py           # Intégration Azure Storage
+│   ├── faissClass.py      # Gestion des indexes FAISS
+│   ├── chuncks.py         # Chunking de documents
+│   ├── ExtractPdfOCR.py   # Extraction OCR
+│   ├── buildprompt.py     # Construction de prompts
+│   └── localPersistence.py # Persistance locale
+├── rag_local/
+│   ├── index_helper.py    # Construction et mises à jour d'index
+│   ├── query_helper.py    # Requêtes aux indexes FAISS
+│   ├── llm_router.py      # Routage vers LLM (Ollama/OpenAI)
+│   ├── local_llm_client.py # Client Ollama
+│   ├── openai_client.py   # Client OpenAI API
+│   ├── final_answer_formatter.py # Formatage réponses
+│   └── requirements.txt   # Dépendances RAG
+</code></pre><h4 id="3-couche-données">3. <strong>Couche données</strong> </h4>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>Knowledge_base/
+├── raw/                   # Documents bruts
+├── faiss_text.index       # Index FAISS texte
+├── faiss_image.index      # Index FAISS images
+├── store.sqlite           # Métadonnées SQLite
+├── text_chunks.jsonl      # Chunks texte
+├── images.jsonl           # Métadonnées images
+├── kb_meta.json           # Configuration KB
+└── cache/                 # Cache OCR/processing
+</code></pre><hr>
+<h2 id="api-et-fonctions-principales">API et fonctions principales </h2>
+<h3 id="cloud-mode---cloud_chatbotpy">Cloud Mode - cloud_chatbot.py </h3>
+<h4 id="helper-get_asset_pathasset_name">Helper: <code>get_asset_path(asset_name)</code> </h4>
+<p><strong>Description</strong>: Résout les chemins des ressources pour PyInstaller</p>
+<pre data-role="codeBlock" data-info="python" class="language-python python"><code><span class="token keyword keyword-def">def</span> <span class="token function">get_asset_path</span><span class="token punctuation">(</span>asset_name<span class="token punctuation">:</span> <span class="token builtin">str</span><span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">&gt;</span> <span class="token builtin">str</span><span class="token punctuation">:</span>
+    <span class="token triple-quoted-string string">"""
+    Retourne le chemin correct pour les ressources à la fois 
+    en mode bundle PyInstaller et en mode développement.
+    """</span>
+</code></pre><p><strong>Paramètres</strong>:</p>
+<ul>
+<li><code>asset_name</code> (str): Nom du fichier dans le dossier assets/</li>
+</ul>
+<p><strong>Retour</strong>: Chemin absolu vers la ressource</p>
+<p><strong>Exemple</strong>:</p>
+<pre data-role="codeBlock" data-info="python" class="language-python python"><code>icon_path <span class="token operator">=</span> get_asset_path<span class="token punctuation">(</span><span class="token string">"kitview_icon.png"</span><span class="token punctuation">)</span>
+spinner <span class="token operator">=</span> QMovie<span class="token punctuation">(</span>get_asset_path<span class="token punctuation">(</span><span class="token string">"typing.gif"</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+</code></pre><hr>
+<h4 id="fonction-openaiuploadfilesfiles-list---list">Fonction: <code>openaiUploadFiles(files: list) -&gt; list</code> </h4>
+<p><strong>Description</strong>: Upload multiple fichiers vers OpenAI</p>
+<pre data-role="codeBlock" data-info="python" class="language-python python"><code><span class="token keyword keyword-def">def</span> <span class="token function">openaiUploadFiles</span><span class="token punctuation">(</span>files<span class="token punctuation">:</span> <span class="token builtin">list</span><span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">&gt;</span> <span class="token builtin">list</span><span class="token punctuation">:</span>
+    <span class="token triple-quoted-string string">"""
+    Upload des fichiers vers OpenAI pour utilisation avec l'assistant.
+    """</span>
+</code></pre><p><strong>Paramètres</strong>:</p>
+<ul>
+<li><code>files</code> (list): Liste de chemins de fichiers à uploader</li>
+</ul>
+<p><strong>Retour</strong>: Liste des IDs de fichiers OpenAI</p>
+<p><strong>Exceptions</strong>:</p>
+<ul>
+<li><code>FileNotFoundError</code>: Fichier non trouvé</li>
+<li><code>OpenAIError</code>: Erreur API OpenAI</li>
+</ul>
+<p><strong>Exemple</strong>:</p>
+<pre data-role="codeBlock" data-info="python" class="language-python python"><code>file_ids <span class="token operator">=</span> openaiUploadFiles<span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token string">"/path/to/doc1.pdf"</span><span class="token punctuation">,</span> <span class="token string">"/path/to/doc2.docx"</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+<span class="token comment"># Retour: ['file-xxxxxxx', 'file-yyyyyyy']</span>
+</code></pre><hr>
+<h4 id="fonction-get_kb_filesdirectory-str---list">Fonction: <code>get_kb_files(directory: str) -&gt; list</code> </h4>
+<p><strong>Description</strong>: Récupère tous les fichiers supportés d'un répertoire</p>
+<pre data-role="codeBlock" data-info="python" class="language-python python"><code><span class="token keyword keyword-def">def</span> <span class="token function">get_kb_files</span><span class="token punctuation">(</span>directory<span class="token punctuation">:</span> <span class="token builtin">str</span><span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">&gt;</span> <span class="token builtin">list</span><span class="token punctuation">:</span>
+    <span class="token triple-quoted-string string">"""
+    Récupère les chemins de tous les fichiers supportés
+    dans un répertoire donné.
+    """</span>
+</code></pre><p><strong>Formats supportés</strong>: <code>.pdf</code>, <code>.doc</code>, <code>.docx</code>, <code>.xls</code>, <code>.xlsx</code>, <code>.ppt</code>, <code>.pptx</code>, <code>.csv</code>, <code>.json</code></p>
+<p><strong>Paramètres</strong>:</p>
+<ul>
+<li><code>directory</code> (str): Chemin du répertoire</li>
+</ul>
+<p><strong>Retour</strong>: Liste des chemins de fichiers valides</p>
+<p><strong>Exemple</strong>:</p>
+<pre data-role="codeBlock" data-info="python" class="language-python python"><code>files <span class="token operator">=</span> get_kb_files<span class="token punctuation">(</span><span class="token string">"./documents"</span><span class="token punctuation">)</span>
+<span class="token comment"># Retour: ['./documents/file1.pdf', './documents/file2.docx']</span>
+</code></pre><hr>
+<h4 id="fonction-wait_for_files_to_be_readyfile_ids-list">Fonction: <code>wait_for_files_to_be_ready(file_ids: list)</code> </h4>
+<p><strong>Description</strong>: Attend que les fichiers uploadés soit traités par OpenAI</p>
+<pre data-role="codeBlock" data-info="python" class="language-python python"><code><span class="token keyword keyword-def">def</span> <span class="token function">wait_for_files_to_be_ready</span><span class="token punctuation">(</span>file_ids<span class="token punctuation">:</span> <span class="token builtin">list</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token triple-quoted-string string">"""
+    Boucle d'attente jusqu'à ce que tous les fichiers
+    soient traités et prêts pour utilisation.
+    """</span>
+</code></pre><p><strong>Paramètres</strong>:</p>
+<ul>
+<li><code>file_ids</code> (list): IDs des fichiers à suivre</li>
+</ul>
+<p><strong>Délai d'attente</strong>: 2 secondes entre chaque vérification</p>
+<hr>
+<h4 id="fonction-create_thread_with_filesfile_ids-list-user_question-str---thread">Fonction: <code>create_thread_with_files(file_ids: list, user_question: str) -&gt; Thread</code> </h4>
+<p><strong>Description</strong>: Crée un thread OpenAI avec fichiers attachés</p>
+<pre data-role="codeBlock" data-info="python" class="language-python python"><code><span class="token keyword keyword-def">def</span> <span class="token function">create_thread_with_files</span><span class="token punctuation">(</span>file_ids<span class="token punctuation">:</span> <span class="token builtin">list</span><span class="token punctuation">,</span> user_question<span class="token punctuation">:</span> <span class="token builtin">str</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token triple-quoted-string string">"""
+    Crée un thread OpenAI et y attache des fichiers
+    pour la recherche vectorielle.
+    """</span>
+</code></pre><p><strong>Paramètres</strong>:</p>
+<ul>
+<li><code>file_ids</code> (list): IDs des fichiers uploadés</li>
+<li><code>user_question</code> (str): Question initiale</li>
+</ul>
+<p><strong>Retour</strong>: Objet Thread OpenAI</p>
+<p><strong>Workflow interne</strong>:</p>
+<ol>
+<li>Récupère le Vector Store configuré</li>
+<li>Ajoute les fichiers au Vector Store en batch</li>
+<li>Crée un thread avec les tool_resources configurées</li>
+<li>Lance un run avec l'assistant spécifié</li>
+</ol>
+<hr>
+<h4 id="classe-chatbotappqwidget">Classe: <code>ChatbotApp(QWidget)</code> </h4>
+<p><strong>Description</strong>: Interface graphique principale de l'application</p>
+<p><strong>Attributs principaux</strong>:</p>
+<pre data-role="codeBlock" data-info="python" class="language-python python"><code>self<span class="token punctuation">.</span>chat_display      <span class="token comment"># QTextBrowser - Affichage des messages</span>
+self<span class="token punctuation">.</span>input_text        <span class="token comment"># QLineEdit - Zone de saisie</span>
+self<span class="token punctuation">.</span>loading_label     <span class="token comment"># QLabel - Animation de chargement</span>
+self<span class="token punctuation">.</span>spinner           <span class="token comment"># QMovie - Animation GIF</span>
+self<span class="token punctuation">.</span>bot_avatar        <span class="token comment"># str - HTML &lt;img&gt; pour avatar bot</span>
+self<span class="token punctuation">.</span>files_ids         <span class="token comment"># list - IDs des fichiers chargés</span>
+self<span class="token punctuation">.</span>history           <span class="token comment"># list - Historique des messages</span>
+self<span class="token punctuation">.</span>history_index     <span class="token comment"># int - Index navigation historique</span>
+self<span class="token punctuation">.</span>selected_folder   <span class="token comment"># str - Dossier sélectionné</span>
+</code></pre><p><strong>Méthodes principales</strong>:</p>
+<h5 id="__init__application_name-files_idsnone"><code>__init__(application_name, files_ids=None)</code> </h5>
+<p>Initialise l'interface avec le nom et les fichiers</p>
+<h5 id="send_messageapplication_name-files_ids"><code>send_message(application_name, files_ids)</code> </h5>
+<p>Envoie un message à l'assistant OpenAI</p>
+<ul>
+<li>Lance <code>ChatbotWorker</code> en thread séparé</li>
+<li>Affiche l'animation de chargement</li>
+<li>Affiche la réponse en HTML</li>
+</ul>
+<h5 id="reset_conversation"><code>reset_conversation()</code> </h5>
+<p>Réinitialise la conversation</p>
+<h5 id="select_folder"><code>select_folder()</code> </h5>
+<p>Ouvre un dialogue pour sélectionner un dossier de documents</p>
+<ul>
+<li>Lance <code>KbFileProcessingThread</code></li>
+<li>Upload les fichiers vers OpenAI</li>
+</ul>
+<h5 id="get_iconapp_name-str---qicon"><code>get_icon(app_name: str) -&gt; QIcon</code> </h5>
+<p>Récupère l'icône correspondant à l'application</p>
+<hr>
+<h4 id="classe-chatbotworkerqthread">Classe: <code>ChatbotWorker(QThread)</code> </h4>
+<p><strong>Description</strong>: Thread worker pour les appels API asynchrones</p>
+<p><strong>Signals</strong>:</p>
+<pre data-role="codeBlock" data-info="python" class="language-python python"><code>response_received <span class="token operator">=</span> pyqtSignal<span class="token punctuation">(</span><span class="token builtin">str</span><span class="token punctuation">)</span>  <span class="token comment"># Réponse reçue</span>
+error_occurred <span class="token operator">=</span> pyqtSignal<span class="token punctuation">(</span><span class="token builtin">str</span><span class="token punctuation">)</span>     <span class="token comment"># Erreur survenue</span>
+</code></pre><p><strong>Workflow</strong>:</p>
+<ol>
+<li>Récupère l'assistant spécifié</li>
+<li>Crée un run sur le thread</li>
+<li>Attend la complétion avec polling</li>
+<li>Émet le signal <code>response_received</code></li>
+</ol>
+<hr>
+<h4 id="classe-kbfileprocessingthreadqthread">Classe: <code>KbFileProcessingThread(QThread)</code> </h4>
+<p><strong>Description</strong>: Thread pour traiter et uploader les fichiers</p>
+<p><strong>Signals</strong>:</p>
+<pre data-role="codeBlock" data-info="python" class="language-python python"><code>processing_done <span class="token operator">=</span> pyqtSignal<span class="token punctuation">(</span><span class="token builtin">list</span><span class="token punctuation">)</span>   <span class="token comment"># Upload complété</span>
+failed <span class="token operator">=</span> pyqtSignal<span class="token punctuation">(</span><span class="token builtin">str</span><span class="token punctuation">)</span>             <span class="token comment"># Erreur survenue</span>
+</code></pre><hr>
+<h3 id="local-rag-mode---standalone_chabotpy">Local RAG Mode - standalone_chabot.py </h3>
+<h4 id="classe-insgestnewfilesthreadqthread">Classe: <code>InsgestNewFilesThread(QThread)</code> </h4>
+<p><strong>Description</strong>: Thread pour ingérer de nouveaux fichiers dans la base de connaissances</p>
+<p><strong>Signals</strong>:</p>
+<pre data-role="codeBlock" data-info="python" class="language-python python"><code>processing_done <span class="token operator">=</span> pyqtSignal<span class="token punctuation">(</span><span class="token builtin">list</span><span class="token punctuation">)</span>   <span class="token comment"># Fichiers ingérés</span>
+failed <span class="token operator">=</span> pyqtSignal<span class="token punctuation">(</span><span class="token builtin">str</span><span class="token punctuation">)</span>             <span class="token comment"># Erreur survenue</span>
+</code></pre><p><strong>Workflow</strong>:</p>
+<ol>
+<li>Sauvegarde les fichiers dans <code>KB_DIR</code></li>
+<li>Lance l'indexation via <code>index_helper.ingest()</code></li>
+<li>Émet le signal <code>processing_done</code></li>
+</ol>
+<hr>
+<h3 id="rag-local---module-rag_local">RAG Local - Module rag_local/ </h3>
+<h4 id="index_helperpy"><code>index_helper.py</code> </h4>
+<p><strong>Configuration</strong>:</p>
+<pre data-role="codeBlock" data-info="python" class="language-python python"><code>KB_DIR <span class="token operator">=</span> <span class="token string">"./knowledge_base"</span>
+RAW_DIR <span class="token operator">=</span> KB_DIR <span class="token operator">+</span> <span class="token string">"/raw"</span>           <span class="token comment"># Documents bruts</span>
+CACHE_DIR <span class="token operator">=</span> KB_DIR <span class="token operator">+</span> <span class="token string">"/cache"</span>       <span class="token comment"># Cache OCR</span>
+DB_PATH <span class="token operator">=</span> KB_DIR <span class="token operator">+</span> <span class="token string">"/store.sqlite"</span>  <span class="token comment"># Base métadonnées</span>
+TEXT_INDEX_PATH <span class="token operator">=</span> KB_DIR <span class="token operator">+</span> <span class="token string">"/faiss_text.index"</span>
+IMAGE_INDEX_PATH <span class="token operator">=</span> KB_DIR <span class="token operator">+</span> <span class="token string">"/faiss_image.index"</span>
+TEXT_CHUNKS_JSONL <span class="token operator">=</span> KB_DIR <span class="token operator">+</span> <span class="token string">"/text_chunks.jsonl"</span>
+IMAGES_JSONL <span class="token operator">=</span> KB_DIR <span class="token operator">+</span> <span class="token string">"/images.jsonl"</span>
+KB_META_JSON <span class="token operator">=</span> KB_DIR <span class="token operator">+</span> <span class="token string">"/kb_meta.json"</span>
+
+<span class="token comment"># Modèles</span>
+TEXT_MODEL <span class="token operator">=</span> <span class="token string">"sentence-transformers/all-MiniLM-L6-v2"</span>
+CLIP_MODEL <span class="token operator">=</span> <span class="token string">"sentence-transformers/clip-ViT-B-32-multilingual-v1"</span>
+
+<span class="token comment"># Chunking</span>
+CHUNK_SIZE <span class="token operator">=</span> <span class="token number">900</span>
+CHUNK_OVERLAP <span class="token operator">=</span> <span class="token number">180</span>
+</code></pre><p><strong>Formats supportés</strong>: <code>.pdf</code>, <code>.docx</code>, <code>.csv</code>, <code>.txt</code></p>
+<p><strong>Fonctions principales</strong>:</p>
+<h5 id="ingestkb_dir-str"><code>ingest(kb_dir: str)</code> </h5>
+<p>Ingère tous les fichiers non-traités du répertoire brut</p>
+<p><strong>Workflow</strong>:</p>
+<ol>
+<li>Parcourt <code>raw_dir</code></li>
+<li>Traite les fichiers PDF (texte + images via OCR)</li>
+<li>Traite les fichiers DOCX</li>
+<li>Crée les embeddings via Sentence Transformers</li>
+<li>Construit les indexes FAISS</li>
+<li>Stocke les métadonnées en SQLite</li>
+</ol>
+<hr>
+<h4 id="query_helperpy"><code>query_helper.py</code> </h4>
+<p><strong>Fonctions principales</strong>:</p>
+<h5 id="search_textquery-str-top_k-int--5---listdict"><code>search_text(query: str, top_k: int = 5) -&gt; List[Dict]</code> </h5>
+<p>Recherche textuelle dans la base de connaissances</p>
+<p><strong>Paramètres</strong>:</p>
+<ul>
+<li><code>query</code> (str): Requête de recherche</li>
+<li><code>top_k</code> (int): Nombre de résultats</li>
+</ul>
+<p><strong>Retour</strong>: Liste des chunks texte avec scores</p>
+<h5 id="search_imagesquery-str-max_n-int--2---listdict"><code>search_images(query: str, max_n: int = 2) -&gt; List[Dict]</code> </h5>
+<p>Recherche d'images</p>
+<p><strong>Paramètres</strong>:</p>
+<ul>
+<li><code>query</code> (str): Requête (texte ou images)</li>
+<li><code>max_n</code> (int): Nombre maximum d'images</li>
+</ul>
+<p><strong>Retour</strong>: Liste des images avec métadonnées</p>
+<h5 id="retrievequery-str-top_k_text-int--5-top_k_images-int--2---dict"><code>retrieve(query: str, top_k_text: int = 5, top_k_images: int = 2) -&gt; Dict</code> </h5>
+<p>Recherche complète (texte + images)</p>
+<hr>
+<h4 id="llm_routerpy"><code>llm_router.py</code> </h4>
+<p><strong>Fonction</strong>: <code>call_llm(prompt: str, model: str) -&gt; str</code></p>
+<p><strong>Backends supportés</strong>:</p>
+<ul>
+<li><code>ollama</code>: Modèles locaux via Ollama</li>
+<li><code>openai</code>: API OpenAI</li>
+<li><code>llamacpp</code>: Ollama/llama-cpp-python</li>
+<li><code>hf</code>: Hugging Face</li>
+</ul>
+<p><strong>Sélection</strong>:</p>
+<pre data-role="codeBlock" data-info="python" class="language-python python"><code>backend <span class="token operator">=</span> os<span class="token punctuation">.</span>getenv<span class="token punctuation">(</span><span class="token string">"LLM_BACKEND"</span><span class="token punctuation">,</span> <span class="token string">"ollama"</span><span class="token punctuation">)</span>
+</code></pre><hr>
+<h4 id="local_llm_clientpy"><code>local_llm_client.py</code> </h4>
+<p><strong>Fonction</strong>: <code>call_ollama_llm_generate(prompt: str, model: str) -&gt; str</code></p>
+<p>Appelle le serveur Ollama local</p>
+<p><strong>Configuration</strong>:</p>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>OLLAMA_BASE_URL = "http://localhost:11434"
+OLLAMA_MODEL = "phi3:mini"  # Par défaut
+</code></pre><hr>
+<h4 id="openai_clientpy"><code>openai_client.py</code> </h4>
+<p><strong>Fonction</strong>: <code>call_llm(prompt: str, model: str) -&gt; str</code></p>
+<p>Appelle l'API OpenAI</p>
+<p><strong>Nécessite</strong>:</p>
+<ul>
+<li><code>OPENAI_API_KEY</code> dans les variables d'environnement</li>
+</ul>
+<hr>
+<h4 id="final_answer_formatterpy"><code>final_answer_formatter.py</code> </h4>
+<p><strong>Fonction</strong>: <code>format_final_answer_html(text: str) -&gt; str</code></p>
+<p>Formate la réponse du LLM en HTML avec:</p>
+<ul>
+<li>Titres Markdown</li>
+<li>Listes à puces</li>
+<li>Gestion des citations</li>
+<li>Highlighting des passages importants</li>
+</ul>
+<hr>
+<h2 id="intégrations-cloud">Intégrations Cloud </h2>
+<h3 id="1-openai-integration-cloud-mode">1. OpenAI Integration (Cloud Mode) </h3>
+<h4 id="configuration">Configuration </h4>
+<pre data-role="codeBlock" data-info="env" class="language-env env"><code>KITVIEW_DESKTOP_OPENAI_API_KEY=sk-xxxx
+KITVIEW_DESKTOP_OPENAI_ASSITANT_VECTORE_STORE_ID=vs-xxxxx
+ASSISTANT_IDS={"kitview":"asst_xxxx","orqual":"asst_yyyy"}
+</code></pre><h4 id="architecture">Architecture </h4>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>User Input
+    ↓
+OpenAI Assistant API
+    ├── File Search (Vector Store)
+    ├── Tools (if configured)
+    └── Built-in system prompt
+    ↓
+Response with citations
+</code></pre><h4 id="workflow">Workflow </h4>
+<ol>
+<li>
+<p><strong>Upload de fichiers</strong>:</p>
+<ul>
+<li><code>openaiUploadFiles()</code> → OpenAI Files API</li>
+<li>Retourne <code>file_ids</code></li>
+</ul>
+</li>
+<li>
+<p><strong>Création de thread</strong>:</p>
+<ul>
+<li><code>create_thread_with_files()</code> crée un thread</li>
+<li>Ajoute les fichiers au Vector Store</li>
+<li>Configure tool_resources</li>
+</ul>
+</li>
+<li>
+<p><strong>Génération de réponse</strong>:</p>
+<ul>
+<li><code>ChatbotWorker</code> lance un run</li>
+<li>Polling du statut du run</li>
+<li>Récupération des messages générés</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h3 id="2-azure-storage-integration">2. Azure Storage Integration </h3>
+<h4 id="configuration-1">Configuration </h4>
+<pre data-role="codeBlock" data-info="env" class="language-env env"><code>AZURE_STORAGE_CONNECTION_STRING=DefaultEndpointsProtocol=https;...
+</code></pre><h4 id="fonction-download_knowledge_files_from_azure">Fonction: <code>download_knowledge_files_from_azure()</code> </h4>
+<p><strong>Paramètres</strong>:</p>
+<pre data-role="codeBlock" data-info="python" class="language-python python"><code>container_name<span class="token operator">=</span><span class="token string">"kitview"</span>      <span class="token comment"># Conteneur Azure</span>
+dest_dir<span class="token operator">=</span><span class="token string">"./Knowledge_base"</span>   <span class="token comment"># Destination locale</span>
+</code></pre><p><strong>Workflow</strong>:</p>
+<ol>
+<li>Connexion au Blob Service</li>
+<li>Liste tous les blobs</li>
+<li>Vérifie les fichiers existants (taille)</li>
+<li>Télécharge les nouveaux/modifiés</li>
+<li>Crée la structure de répertoires</li>
+</ol>
+<p><strong>Formats de chemin</strong>:</p>
+<ul>
+<li>Les caractères Windows réservés sont remplacés: <code>&lt;&gt;:"/\|?*</code> → <code>_</code></li>
+</ul>
+<hr>
+<h3 id="3-google-drive-integration">3. Google Drive Integration </h3>
+<h4 id="configuration-2">Configuration </h4>
+<pre data-role="codeBlock" data-info="env" class="language-env env"><code>CLIENT_SECRETS=config/client_secrets.json
+GOOGLE_DRIVE_TARGET_FOLDER_ID=folder_id_xxx
+</code></pre><h4 id="dépendances-optionnel">Dépendances (optionnel) </h4>
+<ul>
+<li>Google Drive nécessite PyDrive (ou PyDrive2)</li>
+<li>Si PyDrive n'est pas installé, la fonctionnalité est désactivée et une erreur explicite est levée seulement lors de l'appel</li>
+</ul>
+<h4 id="fonction-download_knowledge_files_from_googledrive">Fonction: <code>download_knowledge_files_from_googleDrive()</code> </h4>
+<p><strong>Authentication</strong>:</p>
+<ul>
+<li>Utilise <code>settings.yaml</code> pour configuration PyDrive</li>
+<li>Sauvegarde tokens dans <code>token.json</code></li>
+<li>Refresh automatique des tokens expirés</li>
+</ul>
+<p><strong>Workflow</strong>:</p>
+<ol>
+<li>Auth via Google OAuth2</li>
+<li>Accès au dossier cible</li>
+<li>Filtre par MIME types:
+<ul>
+<li><code>application/pdf</code></li>
+<li><code>application/msword</code></li>
+<li><code>application/vnd.openxmlformats-officedocument.wordprocessingml.document</code></li>
+</ul>
+</li>
+<li>Télécharge les fichiers</li>
+</ol>
+<hr>
+<h2 id="système-rag-local">Système RAG Local </h2>
+<h3 id="vue-densemble">Vue d'ensemble </h3>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>Input Query
+    ↓
+[Embedding via Sentence Transformers]
+    ↓
+┌─────────────────────────────────┐
+│  FAISS Index Search             │
+├──────────────┬──────────────────┤
+│ Text Index   │ Image Index      │
+│ all-MiniLM   │ CLIP ViT-B-32    │
+└──────────────┴──────────────────┘
+    ↓                    ↓
+Text Results      Image Results
+    ↓                    ↓
+[CrossEncoder Reranking (optionnel)]
+    ↓                    ↓
+Top-k Results
+    ↓
+[LLM Router]
+├── Ollama (local)
+├── OpenAI API
+└── Llama-cpp
+    ↓
+Final Answer (formatted HTML)
+</code></pre><h3 id="modèles-embedding">Modèles Embedding </h3>
+<h4 id="modèle-texte-all-minilm-l6-v2">Modèle Texte: <code>all-MiniLM-L6-v2</code> </h4>
+<ul>
+<li>Dimension: 384</li>
+<li>Optimisé pour: Recherche dense</li>
+<li>License: Apache 2.0</li>
+</ul>
+<h4 id="modèle-image-clip-vit-b-32-multilingual-v1">Modèle Image: <code>clip-ViT-B-32-multilingual-v1</code> </h4>
+<ul>
+<li>Dimension: 512</li>
+<li>Basé sur: CLIP (OpenAI)</li>
+<li>Multilingue</li>
+<li>Optimisé pour: Image/text matching</li>
+</ul>
+<h3 id="métadonnées-sqlite">Métadonnées SQLite </h3>
+<h4 id="schéma">Schéma </h4>
+<pre data-role="codeBlock" data-info="sql" class="language-sql sql"><code><span class="token comment">-- Métadonnées texte</span>
+<span class="token keyword keyword-CREATE">CREATE</span> <span class="token keyword keyword-TABLE">TABLE</span> text_metadata <span class="token punctuation">(</span>
+    id <span class="token keyword keyword-INTEGER">INTEGER</span> <span class="token keyword keyword-PRIMARY">PRIMARY</span> <span class="token keyword keyword-KEY">KEY</span><span class="token punctuation">,</span>
+    faiss_id <span class="token keyword keyword-INTEGER">INTEGER</span><span class="token punctuation">,</span>
+    source_file <span class="token keyword keyword-TEXT">TEXT</span><span class="token punctuation">,</span>
+    page_number <span class="token keyword keyword-INTEGER">INTEGER</span><span class="token punctuation">,</span>
+    chunk_index <span class="token keyword keyword-INTEGER">INTEGER</span><span class="token punctuation">,</span>
+    <span class="token keyword keyword-text">text</span> <span class="token keyword keyword-BLOB">BLOB</span><span class="token punctuation">,</span>
+    embedding_date <span class="token keyword keyword-TIMESTAMP">TIMESTAMP</span><span class="token punctuation">,</span>
+    <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">-- Métadonnées images</span>
+<span class="token keyword keyword-CREATE">CREATE</span> <span class="token keyword keyword-TABLE">TABLE</span> image_metadata <span class="token punctuation">(</span>
+    id <span class="token keyword keyword-INTEGER">INTEGER</span> <span class="token keyword keyword-PRIMARY">PRIMARY</span> <span class="token keyword keyword-KEY">KEY</span><span class="token punctuation">,</span>
+    faiss_id <span class="token keyword keyword-INTEGER">INTEGER</span><span class="token punctuation">,</span>
+    source_file <span class="token keyword keyword-TEXT">TEXT</span><span class="token punctuation">,</span>
+    page_number <span class="token keyword keyword-INTEGER">INTEGER</span><span class="token punctuation">,</span>
+    image_data <span class="token keyword keyword-BLOB">BLOB</span><span class="token punctuation">,</span>
+    embedding_date <span class="token keyword keyword-TIMESTAMP">TIMESTAMP</span><span class="token punctuation">,</span>
+    <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre><h3 id="index-faiss">Index FAISS </h3>
+<h4 id="index-texte">Index Texte </h4>
+<ul>
+<li>Type: L2 (Euclidean distance)</li>
+<li>Dimension: 384 (all-MiniLM)</li>
+<li>Optimisé pour: Recherche rapide sur grands volumes</li>
+</ul>
+<h4 id="index-image">Index Image </h4>
+<ul>
+<li>Type: L2</li>
+<li>Dimension: 512 (CLIP)</li>
+<li>Optimisé pour: Matching image/texte</li>
+</ul>
+<h3 id="reranking-crossencoder">Reranking (CrossEncoder) </h3>
+<p><strong>Modèle par défaut</strong>: <code>cross-encoder/ms-marco-MiniLM-L-6-v2</code></p>
+<p><strong>Configuration</strong>:</p>
+<pre data-role="codeBlock" data-info="python" class="language-python python"><code>_RERANKER <span class="token operator">=</span> CrossEncoder<span class="token punctuation">(</span>model_name<span class="token punctuation">,</span> device<span class="token operator">=</span><span class="token string">"cuda|cpu"</span><span class="token punctuation">)</span>
+</code></pre><p><strong>Utilité</strong>:</p>
+<ul>
+<li>Affine les résultats FAISS avec des scores cross-encoder</li>
+<li>Améliore la pertinence</li>
+<li>Thread-safe (mutex <code>_LOCK</code>)</li>
+</ul>
+<hr>
+<h2 id="configuration-3">Configuration </h2>
+<h3 id="variables-denvironnement-env">Variables d'environnement (.env) </h3>
+<p><strong>Note</strong>: en mode standalone, le fichier <code>.env</code> est chargé depuis le dossier de l'exécutable.</p>
+<h4 id="pour-cloud-mode">Pour Cloud Mode </h4>
+<pre data-role="codeBlock" data-info="env" class="language-env env"><code># OpenAI
+KITVIEW_DESKTOP_OPENAI_API_KEY=sk-xxxx
+KITVIEW_DESKTOP_OPENAI_ASSITANT_VECTORE_STORE_ID=vs-xxxxx
+ASSISTANT_IDS={"kitview":"asst_xxxx","orqual":"asst_yyyy"}
+
+# Google Drive (optionnel)
+CLIENT_SECRETS=config/client_secrets.json
+GOOGLE_DRIVE_TARGET_FOLDER_ID=folder_id
+
+# Note: nécessite PyDrive/PyDrive2 uniquement si la synchronisation Google Drive est utilisée
+
+# Azure (optionnel)
+AZURE_STORAGE_CONNECTION_STRING=DefaultEndpointsProtocol=https;...
+</code></pre><h4 id="pour-local-rag-mode">Pour Local RAG Mode </h4>
+<pre data-role="codeBlock" data-info="env" class="language-env env"><code># LLM Backend
+LLM_BACKEND=ollama  # ou openai, llamacpp, hf
+
+# Pour Ollama
+OLLAMA_BASE_URL=http://localhost:11434
+OLLAMA_MODEL=phi3:mini
+
+# Pour OpenAI
+OPENAI_API_KEY=sk-xxxx
+
+# RAG
+RERANKER_MODEL=cross-encoder/ms-marco-MiniLM-L-6-v2
+</code></pre><h3 id="fichiers-de-configuration">Fichiers de configuration </h3>
+<h4 id="configclient_secretsjson">config/client_secrets.json </h4>
+<p>Credentials Google OAuth2 (obtenu via Google Cloud Console)</p>
+<h4 id="configcredentialsjson">config/credentials.json </h4>
+<p>Credentials Azure AD (optionnel)</p>
+<h4 id="settingsyaml">settings.yaml </h4>
+<p>Configuration PyDrive</p>
+<pre data-role="codeBlock" data-info="yaml" class="language-yaml yaml"><code><span class="token key atrule">client_config_backend</span><span class="token punctuation">:</span> settings_yaml
+<span class="token key atrule">client_config</span><span class="token punctuation">:</span>
+  <span class="token key atrule">client_id</span><span class="token punctuation">:</span> <span class="token string">"...google.com"</span>
+  <span class="token key atrule">client_secret</span><span class="token punctuation">:</span> <span class="token string">"..."</span>
+  <span class="token key atrule">auth_uri</span><span class="token punctuation">:</span> <span class="token string">"https://accounts.google.com/o/oauth2/auth"</span>
+  <span class="token key atrule">token_uri</span><span class="token punctuation">:</span> <span class="token string">"https://oauth2.googleapis.com/token"</span>
+  <span class="token key atrule">redirect_uri</span><span class="token punctuation">:</span> <span class="token string">"http://localhost:8080/"</span>
+  <span class="token key atrule">scopes</span><span class="token punctuation">:</span>
+    <span class="token punctuation">-</span> <span class="token string">"https://www.googleapis.com/auth/drive"</span>
+</code></pre><hr>
+<h2 id="déploiement-et-compilation">Déploiement et compilation </h2>
+<h3 id="prérequis">Prérequis </h3>
+<pre data-role="codeBlock" data-info="bash" class="language-bash bash"><code><span class="token comment"># Python 3.13+</span>
+<span class="token comment"># Créer l'environnement virtuel</span>
+python <span class="token parameter variable">-m</span> venv env313
+<span class="token builtin class-name">source</span> env313/Scripts/activate
+
+<span class="token comment"># Installer les dépendances</span>
+pip <span class="token function">install</span> <span class="token parameter variable">-r</span> requirements.txt
+</code></pre><h3 id="dépendances-principales">Dépendances principales </h3>
+<pre data-role="codeBlock" data-info="" class="language-text"><code># Interface
+PyQt5==5.15.x
+
+# Cloud
+openai&gt;=1.0
+google-auth-oauthlib  # optionnel (Google Drive)
+google-auth-httplib2  # optionnel (Google Drive)
+google-api-python-client  # optionnel (Google Drive)
+PyDrive  # ou PyDrive2, optionnel (Google Drive)
+
+# Azure
+azure-storage-blob
+azure-identity
+azure-core
+
+# RAG Local
+sentence-transformers
+faiss-cpu  # ou faiss-gpu
+torch
+python-docx
+PyPDF2
+python-pptx
+beautifulsoup4
+pandas
+pytesseract
+Pillow
+numpy
+scikit-learn
+
+# Utilitaires
+python-dotenv
+</code></pre><h3 id="compilation-pyinstaller">Compilation PyInstaller </h3>
+<h4 id="build-cloud_chatbot">Build cloud_chatbot </h4>
+<pre data-role="codeBlock" data-info="bash" class="language-bash bash"><code><span class="token comment"># Build via spec (recommandé)</span>
+pyinstaller cloud_chatbot.spec
+</code></pre><p><strong>Résultat</strong>: <code>dist/cloud_chatbot.exe</code> (~200 MB)</p>
+<p><strong>Option</strong>: pour réduire la taille si Google Drive n'est pas utilisé, passez <code>EXCLUDE_GOOGLE = True</code> dans <code>cloud_chatbot.spec</code>.</p>
+<h4 id="build-standalone_chatbot">Build standalone_chatbot </h4>
+<pre data-role="codeBlock" data-info="bash" class="language-bash bash"><code><span class="token comment"># Build via spec (recommandé)</span>
+pyinstaller standalone_chatbot.spec
+</code></pre><p><strong>Résultat</strong>: <code>dist/standalone_chatbot/</code> (~1.5 GB avec modèles)</p>
+<h3 id="distribution">Distribution </h3>
+<p>Pour <code>cloud_chatbot.exe</code>:</p>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>Distributable/
+├── cloud_chatbot.exe
+├── .env (à remplir par utilisateur)
+└── assets/ (images, icônes)
+</code></pre><p>Pour <code>standalone_chatbot/</code>:</p>
+<pre data-role="codeBlock" data-info="" class="language-text"><code>Distributable/
+├── standalone_chatbot/
+│   ├── standalone_chatbot.exe
+│   └── _internal/
+│       ├── assets/
+│       ├── config/
+│       └── knowledge_base/
+├── .env
+└── knowledge_base/ (optionnel, priorité locale)
+    └── raw/
+</code></pre><p><strong>Note</strong>: le binaire cherche <code>.env</code> à côté de l'exe, charge les assets depuis <code>_internal</code>, et privilégie <code>knowledge_base/raw</code> à côté de l'exe si ce dossier existe.</p>
+<hr>
+<h2 id="dépannage">Dépannage </h2>
+<h3 id="cloud-mode">Cloud Mode </h3>
+<h4 id="problème-importerror-no-module-named-openai">Problème: "ImportError: No module named 'openai'" </h4>
+<p><strong>Solution</strong>:</p>
+<pre data-role="codeBlock" data-info="bash" class="language-bash bash"><code>pip <span class="token function">install</span> openai<span class="token operator">&gt;=</span><span class="token number">1.0</span>
+</code></pre><h4 id="problème-api-key-invalide">Problème: "API Key invalide" </h4>
+<p><strong>Vérification</strong>:</p>
+<pre data-role="codeBlock" data-info="python" class="language-python python"><code><span class="token keyword keyword-import">import</span> os
+<span class="token keyword keyword-from">from</span> dotenv <span class="token keyword keyword-import">import</span> load_dotenv
+load_dotenv<span class="token punctuation">(</span><span class="token punctuation">)</span>
+key <span class="token operator">=</span> os<span class="token punctuation">.</span>getenv<span class="token punctuation">(</span><span class="token string">"KITVIEW_DESKTOP_OPENAI_API_KEY"</span><span class="token punctuation">)</span>
+<span class="token keyword keyword-print">print</span><span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f"Key loaded: </span><span class="token interpolation"><span class="token punctuation">{</span>key<span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token format-spec">10]</span><span class="token punctuation">}</span></span><span class="token string">..."</span></span><span class="token punctuation">)</span>
+</code></pre><h4 id="problème-modulenotfounderror-no-module-named-pydrive">Problème: "ModuleNotFoundError: No module named 'pydrive'" </h4>
+<p><strong>Cause</strong>: Google Drive activé sans PyDrive installé.</p>
+<p><strong>Solution</strong>:</p>
+<pre data-role="codeBlock" data-info="bash" class="language-bash bash"><code>pip <span class="token function">install</span> PyDrive
+</code></pre><p>Ou désactivez Google Drive dans la configuration (pas d'appel à <code>download_knowledge_files_from_googleDrive</code>).</p>
+<h4 id="problème-vector-store-not-found">Problème: "Vector Store not found" </h4>
+<p><strong>Vérification</strong>:</p>
+<ul>
+<li><code>KITVIEW_DESKTOP_OPENAI_ASSITANT_VECTORE_STORE_ID</code> correcte</li>
+<li>Vector Store existe dans le workspace OpenAI</li>
+</ul>
+<h4 id="problème-assets-manquants-dans-lexe-pyinstaller">Problème: "Assets manquants dans l'exe PyInstaller" </h4>
+<p><strong>Solution</strong>:<br>
+Le code résout les assets via <code>_MEIPASS</code> (bundle) ou le dossier de l'exe</p>
+<ul>
+<li>Vérifier que <code>--add-data "assets;assets"</code> est présent</li>
+<li>Assets doivent exister dans <code>assets/</code> du projet</li>
+</ul>
+<hr>
+<h3 id="local-rag-mode">Local RAG Mode </h3>
+<h4 id="problème-cuda-out-of-memory">Problème: "CUDA out of memory" </h4>
+<p><strong>Solutions</strong>:</p>
+<pre data-role="codeBlock" data-info="python" class="language-python python"><code><span class="token comment"># 1. Réduire CHUNK_SIZE dans index_helper.py</span>
+CHUNK_SIZE <span class="token operator">=</span> <span class="token number">500</span>  <span class="token comment"># au lieu de 900</span>
+
+<span class="token comment"># 2. Utiliser CPU pour embeddings</span>
+device <span class="token operator">=</span> <span class="token string">"cpu"</span>  <span class="token comment"># au lieu de "cuda"</span>
+
+<span class="token comment"># 3. Utiliser modèle plus léger</span>
+TEXT_MODEL <span class="token operator">=</span> <span class="token string">"all-MiniLM-L6-v2"</span>
+</code></pre><h4 id="problème-ollama-connection-refused">Problème: "Ollama connection refused" </h4>
+<p><strong>Vérification</strong>:</p>
+<pre data-role="codeBlock" data-info="bash" class="language-bash bash"><code><span class="token comment"># 1. Ollama must be running</span>
+ollama serve
+
+<span class="token comment"># 2. Test la connexion</span>
+<span class="token function">curl</span> http://localhost:11434/api/tags
+
+<span class="token comment"># 3. Vérifier l'URL dans .env</span>
+<span class="token assign-left variable">OLLAMA_BASE_URL</span><span class="token operator">=</span>http://localhost:11434
+</code></pre><h4 id="problème-faiss-index-not-found">Problème: "FAISS index not found" </h4>
+<p><strong>Solution</strong>: Ingérer les fichiers</p>
+<pre data-role="codeBlock" data-info="python" class="language-python python"><code><span class="token keyword keyword-from">from</span> rag_local<span class="token punctuation">.</span>index_helper <span class="token keyword keyword-import">import</span> ingest
+ingest<span class="token punctuation">(</span><span class="token string">"./knowledge_base"</span><span class="token punctuation">)</span>
+</code></pre><hr>
+<h3 id="logs-et-debugging">Logs et Debugging </h3>
+<h4 id="activer-les-logs">Activer les logs </h4>
+<pre data-role="codeBlock" data-info="python" class="language-python python"><code><span class="token keyword keyword-import">import</span> logging
+logging<span class="token punctuation">.</span>basicConfig<span class="token punctuation">(</span>
+    level<span class="token operator">=</span>logging<span class="token punctuation">.</span>DEBUG<span class="token punctuation">,</span>
+    <span class="token builtin">format</span><span class="token operator">=</span><span class="token string">'%(asctime)s - %(name)s - %(levelname)s - %(message)s'</span>
+<span class="token punctuation">)</span>
+</code></pre><h4 id="fichiers-de-log-recommandés">Fichiers de log recommandés </h4>
+<p>Ajouter dans l'app:</p>
+<pre data-role="codeBlock" data-info="python" class="language-python python"><code><span class="token comment"># cloud_chatbot.py</span>
+logging<span class="token punctuation">.</span>basicConfig<span class="token punctuation">(</span>
+    filename<span class="token operator">=</span><span class="token string">'cloud_chatbot.log'</span><span class="token punctuation">,</span>
+    level<span class="token operator">=</span>logging<span class="token punctuation">.</span>DEBUG
+<span class="token punctuation">)</span>
+</code></pre><h4 id="vérification-des-indexes-faiss">Vérification des indexes FAISS </h4>
+<pre data-role="codeBlock" data-info="python" class="language-python python"><code><span class="token keyword keyword-import">import</span> faiss
+
+<span class="token comment"># Charger et vérifier l'index</span>
+index <span class="token operator">=</span> faiss<span class="token punctuation">.</span>read_index<span class="token punctuation">(</span><span class="token string">"knowledge_base/faiss_text.index"</span><span class="token punctuation">)</span>
+<span class="token keyword keyword-print">print</span><span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f"Index ntotal: </span><span class="token interpolation"><span class="token punctuation">{</span>index<span class="token punctuation">.</span>ntotal<span class="token punctuation">}</span></span><span class="token string">"</span></span><span class="token punctuation">)</span>
+<span class="token keyword keyword-print">print</span><span class="token punctuation">(</span><span class="token string-interpolation"><span class="token string">f"Index d (dimension): </span><span class="token interpolation"><span class="token punctuation">{</span>index<span class="token punctuation">.</span>d<span class="token punctuation">}</span></span><span class="token string">"</span></span><span class="token punctuation">)</span>
+</code></pre><hr>
+<h2 id="performance-et-optimisations">Performance et Optimisations </h2>
+<h3 id="cloud-mode-1">Cloud Mode </h3>
+<table>
+<thead>
+<tr>
+<th>Métrique</th>
+<th>Valeur</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Latence réponse</td>
+<td>2-5s</td>
+</tr>
+<tr>
+<td>Coût par requête</td>
+<td>$0.01-0.10</td>
+</tr>
+<tr>
+<td>Limite fichiers</td>
+<td>20 GB/assistant</td>
+</tr>
+<tr>
+<td>Threads simultanés</td>
+<td>10+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="local-rag-mode-1">Local RAG Mode </h3>
+<table>
+<thead>
+<tr>
+<th>Métrique</th>
+<th>Valeur</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Latence recherche</td>
+<td>50-200 ms</td>
+</tr>
+<tr>
+<td>Latence génération</td>
+<td>5-30s (selon modèle)</td>
+</tr>
+<tr>
+<td>VRAM requise</td>
+<td>4-12 GB</td>
+</tr>
+<tr>
+<td>Taille max KB</td>
+<td>50 GB (SSD)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="optimisations-recommandées">Optimisations recommandées </h3>
+<ol>
+<li><strong>Chunking</strong>: Ajuster <code>CHUNK_SIZE</code> et <code>CHUNK_OVERLAP</code></li>
+<li><strong>Batch processing</strong>: Traiter plusieurs requêtes en parallèle</li>
+<li><strong>Caching</strong>: Utiliser Redis pour les embeddings fréquents</li>
+<li><strong>Filtering</strong>: Filtrer par métadonnées avant recherche FAISS</li>
+</ol>
+<hr>
+<h2 id="ressources-et-références">Ressources et références </h2>
+<ul>
+<li><a href="https://platform.openai.com/docs">OpenAI API Documentation</a></li>
+<li><a href="https://www.sbert.net/">Sentence Transformers</a></li>
+<li><a href="https://faiss.ai/">FAISS Documentation</a></li>
+<li><a href="https://doc.qt.io/qt-5/">PyQt5 Documentation</a></li>
+<li><a href="https://ollama.ai/">Ollama Documentation</a></li>
+</ul>
+<hr>
+<p><strong>Version</strong>: 1.0<br>
+<strong>Date</strong>: 2026-02-18<br>
+<strong>Auteur</strong>: Kitview Team</p>
+
+      </div>
+      
+      
+    
+    
+    
+    
+    
+    
+  
+    </body></html>

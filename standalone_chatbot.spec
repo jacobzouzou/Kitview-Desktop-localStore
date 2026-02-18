@@ -1,23 +1,16 @@
 # -*- mode: python ; coding: utf-8 -*-
 
-EXCLUDE_GOOGLE = True  # Set True to shrink build if Google Drive is not used.
-GOOGLE_EXCLUDES = [
-    'pydrive',
-    'oauth2client',
-    'googleapiclient',
-    'google_auth_oauthlib',
-] if EXCLUDE_GOOGLE else []
 
 a = Analysis(
-    ['cloud_chatbot.py'],
+    ['standalone_chatbot.py'],
     pathex=[],
     binaries=[],
-    datas=[('assets', 'assets'), ('config', 'config')],
+    datas=[('assets', 'assets'), ('config', 'config'), ('Knowledge_base', 'knowledge_base')],
     hiddenimports=[],
     hookspath=[],
     hooksconfig={},
     runtime_hooks=[],
-    excludes=GOOGLE_EXCLUDES,
+    excludes=[],
     noarchive=False,
     optimize=0,
 )
@@ -26,10 +19,9 @@ pyz = PYZ(a.pure)
 exe = EXE(
     pyz,
     a.scripts,
-    a.binaries,
-    a.datas,
     [],
-    name='cloud_chatbot',
+    exclude_binaries=True,
+    name='standalone_chatbot',
     debug=False,
     bootloader_ignore_signals=False,
     strip=False,
@@ -43,4 +35,14 @@ exe = EXE(
     codesign_identity=None,
     entitlements_file=None,
     icon=['assets\\kitview_icon.png'],
+)
+
+coll = COLLECT(
+    exe,
+    a.binaries,
+    a.datas,
+    strip=False,
+    upx=True,
+    upx_exclude=[],
+    name='standalone_chatbot',
 )

@@ -1,13 +1,25 @@
-from pydrive.auth import GoogleAuth
-from pydrive.drive import GoogleDrive
 import os, re
 import logging  
-# v3
-from google_auth_oauthlib.flow import InstalledAppFlow
-from googleapiclient.discovery import build
+
+try:
+    from google_auth_oauthlib.flow import InstalledAppFlow
+    from googleapiclient.discovery import build
+    _GOOGLE_AUTH_IMPORT_ERROR = None
+except Exception as e:
+    InstalledAppFlow = None
+    build = None
+    _GOOGLE_AUTH_IMPORT_ERROR = e
 
 from pathlib import Path
-from pydrive.drive import GoogleDrive
+
+try:
+    from pydrive.auth import GoogleAuth
+    from pydrive.drive import GoogleDrive
+    _PYDRIVE_IMPORT_ERROR = None
+except Exception as e:
+    GoogleAuth = None
+    GoogleDrive = None
+    _PYDRIVE_IMPORT_ERROR = e
 
 _WINDOWS_RESERVED = r'<>:"/\\|?*'
 from dotenv import load_dotenv
@@ -23,7 +35,27 @@ MIME_TYPES = [
     "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
 ]
 
-def get_drive() -> GoogleDrive:
+
+def _require_pydrive() -> None:
+    if GoogleAuth is None or GoogleDrive is None:
+        raise RuntimeError(
+            "Google Drive nécessite PyDrive. Installez-le avec: pip install PyDrive"
+        ) from _PYDRIVE_IMPORT_ERROR
+
+
+def _require_google_auth_libs() -> None:
+    if InstalledAppFlow is None or build is None:
+        raise RuntimeError(
+            "Google Drive nécessite google-auth-oauthlib et google-api-python-client."
+        ) from _GOOGLE_AUTH_IMPORT_ERROR
+
+
+def get_drive() -> "GoogleDrive":
+    _require_pydrive()
+    _require_google_auth_libs()
+    if not CLIENT_SECRETS:
+        raise RuntimeError("CLIENT_SECRETS non défini")
+
     gauth = GoogleAuth(SETTINGS_YAML)
     gauth.LoadClientConfigFile(CLIENT_SECRETS)
 
@@ -78,7 +110,7 @@ def download_knowledge_files_from_googleDrive(dest_dir: str = "../Knowledge_base
     Télécharge les fichiers (liste issue de list_file_ids_by_types) vers dest_dir.
     Ne télécharge rien si un fichier du même nom existe déjà.
     """
-    drive: GoogleDrive = get_drive()
+    drive = get_drive()
 
     dest_path = Path(dest_dir).resolve()
     dest_path.mkdir(parents=True, exist_ok=True)

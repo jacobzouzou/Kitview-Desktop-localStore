@@ -1,4 +1,5 @@
 import sys, os, re, shutil, threading
+from pathlib import Path
 
 from PyQt5 import QtGui
 from PyQt5.QtCore import Qt, QThread, pyqtSignal, QSize
@@ -7,7 +8,6 @@ from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout,QLineEdit, QPushB
 import torch
 
 # get  api key from .env file
-from Helpers.google import download_knowledge_files_from_googleDrive
 from Helpers.azure import download_knowledge_files_from_azure
 from rag_local.final_answer_formatter import format_final_answer_html
 
@@ -16,13 +16,48 @@ from rag_local import index_helper
 from sentence_transformers import CrossEncoder
 from typing import Optional
 from dotenv import load_dotenv
-load_dotenv()
+
+
+def _app_base_dir() -> str:
+    if getattr(sys, "frozen", False):
+        return os.path.dirname(sys.executable)
+    return os.path.dirname(os.path.abspath(__file__))
+
+
+def _bundle_base_dir() -> str:
+    if getattr(sys, "frozen", False):
+        return getattr(sys, "_MEIPASS", _app_base_dir())
+    return _app_base_dir()
+
+
+def _first_existing_path(*candidates: str) -> str:
+    for candidate in candidates:
+        if os.path.exists(candidate):
+            return candidate
+    return candidates[0]
+
+
+APP_DIR = _app_base_dir()
+BUNDLE_DIR = _bundle_base_dir()
+ASSETS_DIR = _first_existing_path(
+    os.path.join(APP_DIR, "assets"),
+    os.path.join(BUNDLE_DIR, "assets"),
+)
+KNOWLEDGE_BASE_DIR = _first_existing_path(
+    os.path.join(APP_DIR, "knowledge_base"),
+    os.path.join(APP_DIR, "Knowledge_base"),
+    os.path.join(BUNDLE_DIR, "knowledge_base"),
+    os.path.join(BUNDLE_DIR, "Knowledge_base"),
+)
+KB_DIR = os.path.join(KNOWLEDGE_BASE_DIR, "raw")
+os.makedirs(KB_DIR, exist_ok=True)
+ENV_PATH = os.path.join(APP_DIR, ".env")
+load_dotenv(dotenv_path=ENV_PATH)
 
 APPLICATION_NAME = "kitview"
 GREETING_MESSAGE = "Bonjour, je suis votre assistant Kitview. En quoi puis-je vous aider?"
-BOT_AVATAR = "<img src='./assets/orqual_bot.jpeg' width='30' height='30' style='background-color:transparent;'/>"
+BOT_AVATAR = f"<img src='{Path(os.path.join(ASSETS_DIR, 'orqual_bot.jpeg')).as_uri()}' width='30' height='30' style='background-color:transparent;'/>"
 KNOWLEDGE_FILES = []
-KB_DIR = "./knowledge_base/raw"
 _RERANKER = None
 LLM_MODEL = "phi3:mini"  # "llama3.1:8b", "qwen2.5", "gpt-4o-mini"
 
@@ -128,7 +163,7 @@ class ChatbotApp(QWidget):
         self.layout.addWidget(self.chat_display)
 
         self.loading_label = QLabel(self)
-        self.spinner = QMovie("./assets/typing.gif")
+        self.spinner = QMovie(os.path.join(ASSETS_DIR, "typing.gif"))
         self.spinner.setScaledSize(QSize(75, 50))
         self.spinner.backgroundColor = Qt.transparent
         self.loading_label.setMovie(self.spinner)   
@@ -140,7 +175,7 @@ class ChatbotApp(QWidget):
         
         self.button_layout = QHBoxLayout()
         self.select_folder_button = QPushButton(self)
-        dir_icon = QPixmap("./assets/dir_icon.png")  # Image du bouton
+        dir_icon = QPixmap(os.path.join(ASSETS_DIR, "dir_icon.png"))  # Image du bouton
         self.select_folder_button.setIcon(QIcon(dir_icon))
         self.select_folder_button.setIconSize(QSize(30, 30))  # Ajuste la taille de l'icône
         self.select_folder_button.setFixedSize(52, 52)  # Ajuste la taille du bouton
@@ -158,7 +193,7 @@ class ChatbotApp(QWidget):
         
         self.button_layout = QHBoxLayout()
         self.clear_button = QPushButton(self)
-        clear_icon = QPixmap("./assets/reset.png")  # Image du bouton
+        clear_icon = QPixmap(os.path.join(ASSETS_DIR, "reset.png"))  # Image du bouton
         self.clear_button.setIcon(QIcon(clear_icon))
         self.clear_button.setIconSize(QSize(30,30))  # Ajuste la taille de l'icône
         self.clear_button.setFixedSize(52, 52)  # Ajuste la taille du bouton
@@ -167,7 +202,7 @@ class ChatbotApp(QWidget):
 
         self.button_layout = QHBoxLayout()
         self.send_button = QPushButton(self)
-        send_icon = QPixmap("./assets/send.png")  # Image du bouton
+        send_icon = QPixmap(os.path.join(ASSETS_DIR, "send.png"))  # Image du bouton
         self.send_button.setIcon(QIcon(send_icon))
         self.send_button.setIconSize(QSize(30, 30))  # Ajuste la taille de l'icône
         self.send_button.setFixedSize(52, 52)  # Ajuste la taille du bouton        
@@ -281,16 +316,16 @@ class ChatbotApp(QWidget):
     def get_icon(self, app_name):
         # Dictionnaire des icônes en fonction du nom de l'application
         icons = {
-            "orqual": "./assets/orqual-removebg-preview.png",    
-            "orthalis": "./assets/Orthalis-new.png",
-            "dentalis": "./assets/Dentalis.png",
-            "dentapoche": "./assets/Dentapoche.png",
-            "kitview": "./assets/KitView.png",
-            "ceph":"./assets/ceph.png",
+            "orqual": os.path.join(ASSETS_DIR, "orqual-removebg-preview.png"),
+            "orthalis": os.path.join(ASSETS_DIR, "Orthalis-new.png"),
+            "dentalis": os.path.join(ASSETS_DIR, "Dentalis.png"),
+            "dentapoche": os.path.join(ASSETS_DIR, "Dentapoche.png"),
+            "kitview": os.path.join(ASSETS_DIR, "KitView.png"),
+            "ceph": os.path.join(ASSETS_DIR, "ceph.png"),
         }
 
         # Récupérer le chemin de l'icône ou une icône par défaut
-        icon_path = icons.get(app_name.lower(), "./assets/orqual.png")
+        icon_path = icons.get(app_name.lower(), os.path.join(ASSETS_DIR, "orqual.png"))
 
         # Vérifier si le fichier existe avant de le charger
         if not os.path.exists(icon_path):
@@ -497,8 +532,17 @@ class ChatbotWorker(QThread):
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     args = sys.argv[1:]  # Exclude the script name
-    # download knowledge files from google drive or azure at startup
-    download_knowledge_files_from_azure(dest_dir=KB_DIR)
+    
+    # download knowledge files from google drive or azure at startup (optionnel)
+    if os.getenv("AZURE_STORAGE_CONNECTION_STRING"):
+        try:
+            download_knowledge_files_from_azure(dest_dir=KB_DIR)
+            print("✅ Fichiers Azure téléchargés avec succès")
+        except Exception as e:
+            print(f"⚠️ Erreur lors du téléchargement Azure: {e}")
+    else:
+        print("ℹ️ Azure Storage non configuré, utilisation de la base locale uniquement")
+    
     # build or load the index at startup
     index_helper.ingest()
     window = ChatbotApp(args[0].lower() if args else "kitview") 

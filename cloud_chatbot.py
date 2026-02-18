@@ -2,10 +2,13 @@ from pydoc import html
 import sys, os,time,json,markdown, re
 
 # Force PyInstaller to include these modules
-import pydrive.auth
-import pydrive.drive
-import oauth2client
-import googleapiclient.discovery
+try:
+    import pydrive.auth
+    import pydrive.drive
+    import oauth2client
+    import googleapiclient.discovery
+except Exception:
+    pass
 
 from PyQt5 import QtGui
 from PyQt5.QtCore import Qt, QThread, pyqtSignal, QSize
